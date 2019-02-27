@@ -1,5 +1,7 @@
 {
   "name": "ionic-contract-of-employment-evaluator",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }
