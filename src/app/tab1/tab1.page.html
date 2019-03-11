@@ -30,21 +30,20 @@
       <ion-card no-padding class="welcome-card" padding *ngIf="valueCalculator.taxPercentEstimate">
         <ion-card-header no-padding>
           <h3 text-center><b>Nettopalkka: {{ contractSalary * (1 - (valueCalculator.taxPercentEstimate / 100)) | number:'1.0-0' }} €/kk </b></h3>
-          <ion-card-subtitle text-center>Arvioitu veroprosentti: {{ valueCalculator.taxPercentEstimate }} %</ion-card-subtitle>
+          <ion-card-subtitle text-center>Arvioitu veroprosentti: {{ valueCalculator.taxPercentEstimate | number:'1.0-0' }} %</ion-card-subtitle>
           <ion-card-subtitle text-center>Maksetut verot : {{ contractSalary * (valueCalculator.taxPercentEstimate / 100) | number:'1.0-0' }} €/kk</ion-card-subtitle>
         </ion-card-header>
         <ion-card-content text-center>
-            <ion-button (click)="saveContractData()">Tallenna sopimus</ion-button>
+            <ion-button padding (click)="saveContractData()">Tallenna sopimus</ion-button>
         </ion-card-content>
       </ion-card>
 
-      <div no-padding padding  *ngIf="dataSaved">
-        <ion-header>
+      <ion-card no-padding padding  *ngIf="dataSaved">
+        <ion-card-header>
           <ion-title text-center>Tiedot tallennettu!</ion-title><br>
-          <h5 text-center>Arvioitu veroprosentti: {{ valueCalculator.taxPercentEstimate }} %</h5>
-          <h5 text-center>Voit Lisätä ja tallentaa uuden tiedon tai tarkastella jo tallennettuja tietoja erittely -välilehdellä</h5>
-        </ion-header>
-      </div>
+          <ion-card-subtitle text-center>Voit Lisätä ja tallentaa uuden tiedon tai tarkastella jo tallennettuja tietoja erittely -välilehdellä</ion-card-subtitle>
+        </ion-card-header>
+      </ion-card>
 
 
     </ion-card>
