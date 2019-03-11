@@ -24,41 +24,17 @@
           <ion-label position="floating">Bruttopalkka (€ / kk)</ion-label>
           <ion-input [(ngModel)]="contractSalary" type="numeric"></ion-input>
         </ion-item>
-        <ion-item>
-          <ion-label position="floating">Ennakonpidätysprosentti (%)</ion-label>
-          <ion-input [(ngModel)]="contractTax" type="numeric"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label position="floating">Syötä ikäsi (vuotta)</ion-label>
-          <ion-input [(ngModel)]="contractAge" type="numeric"></ion-input>
-        </ion-item>
+        <div *ngIf="contractSalary">
+          <ion-button (click)="getPercentEstimate()" expand="block">Arvioi veroprosentti ja laske nettopalkka</ion-button>
+        </div>
       </ion-card-content>
 
-      <div padding *ngIf="contractSalary && contractTax && !contractAge">
-        Bruttopalkka: {{ contractSalary }} € / kk <br>
-        Käteen jäävä osuus: {{ contractSalary * (1 - (contractTax / 100)) }} € / kk <br>
-        Ennakonpidätys : {{ contractSalary * (contractTax / 100) }} € / kk  <br>
+      <div padding *ngIf="valueCalculator.taxPercentEstimate">
+        <h3>Käteen jäävä osuus: {{ contractSalary * (1 - (valueCalculator.taxPercentEstimate / 100)) | number:'1.0-0' }} € / kk <br></h3>
+        <h5>Arvioitu veroprosentti: {{ valueCalculator.taxPercentEstimate }} % <br></h5>
+        <h5>Maksetut verot : {{ contractSalary * (valueCalculator.taxPercentEstimate / 100) | number:'1.0-0' }} € / kk  <br></h5>
+        <ion-button (click)="saveContractData()" expand="block">Tallenna sopimus</ion-button>
       </div>
-      <div color="info" padding *ngIf="contractSalary && contractTax && contractAge >= 17 && contractAge <= 52 ">
-        <p>Bruttopalkka: {{ contractSalary }} € / kk <br>
-        Ennakonpidätys : {{ contractSalary * (contractTax / 100) }} € / kk <br>
-        Työeläkemaksu: {{ contractSalary * contractPension1 }} € / kk<br>
-        Työttömyysvakuutusmaksu: {{ contractSalary * contractUnemploymentInsurance }} € / kk <br></p>
-        <h5>Käteen jäävä osuus: 
-        {{ (contractSalary * (1 - (contractTax / 100))) - (contractSalary * contractPension1) - (contractSalary * contractUnemploymentInsurance) }} € / kk</h5>
-        <ion-button (click)="saveContractData" expand="block">Tallenna sopimus</ion-button>
-      </div>
-      <div padding *ngIf="contractSalary && contractTax && contractAge >= 53 && contractAge <= 62 ">
-        Bruttopalkka: {{ contractSalary }} € / kk <br>
-        Ennakonpidätys : {{ contractSalary * (contractTax / 100) }} € / kk <br>
-        Työeläkemaksu: {{ contractSalary * contractPension1 }} € / kk<br>
-        Työttömyysvakuutusmaksu: {{ contractSalary * contractUnemploymentInsurance }} € / kk <br>
-        <h5>Käteen jäävä osuus: 
-        {{ (contractSalary * (1 - (contractTax / 100))) - (contractSalary * contractPension2) - (contractSalary * contractUnemploymentInsurance) }} € / kk</h5> <br>
-        <ion-button (click)="saveContractData" expand="block">Tallenna sopimus</ion-button>
-      </div>
-      
-
     </ion-card>
 
    
