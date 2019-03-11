@@ -11,20 +11,16 @@ export class Tab1Page {
   contractName : string;
   contractSalary : number;
   contractTax : number;
-  contractAge : number;
 
-  contractPension1 : number = 0.0675;
-  contractPension2 : number = 0.0825;
-  contractUnemploymentInsurance : number = 0.015 
+  dataSaved : boolean = false;
 
   constructor(public valueCalculator : ValuecalculatorService) {
 
   }
   getPercentEstimate = () : void => {
     this.valueCalculator.getPercentEstimate(this.contractSalary);
+    this.dataSaved = false;
   }
-
-
 
   saveContractData = () : void => {
     let newContract : any = {
@@ -37,6 +33,9 @@ export class Tab1Page {
     this.contractName = "";
     this.valueCalculator.taxPercentEstimate = null;
     this.valueCalculator.contracts.push(newContract);
+    this.dataSaved = true;
   }
+
+  
 
 }
