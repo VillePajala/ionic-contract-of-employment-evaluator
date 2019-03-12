@@ -3,7 +3,8 @@
 
 /** Ionic CSS Variables **/
 :root {
-  
+  /* Set the background of the entire app */
+  --ion-background-color: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
   /** primary **/
   --ion-color-primary: #3880ff;
   --ion-color-primary-rgb: 56, 128, 255;
