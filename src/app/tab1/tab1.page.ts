@@ -13,6 +13,7 @@ export class Tab1Page {
   contractTax : number;
 
   dataSaved : boolean = false;
+  result : boolean = false;
 
   constructor(public valueCalculator : ValuecalculatorService) {
 
@@ -20,6 +21,7 @@ export class Tab1Page {
   getPercentEstimate = () : void => {
     this.valueCalculator.getPercentEstimate(this.contractSalary);
     this.dataSaved = false;
+    this.result = true;
   }
 
   saveContractData = () : void => {
@@ -34,6 +36,7 @@ export class Tab1Page {
     this.valueCalculator.taxPercentEstimate = null;
     this.valueCalculator.contracts.push(newContract);
     this.dataSaved = true;
+    this.result = false;
   }
 
   

@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>
+    <ion-title >
       Palkkalaskuri
     </ion-title>
     
@@ -8,7 +8,7 @@
 </ion-header>
 
 <ion-content>
-    <ion-card class="welcome-card">
+    <ion-card id="mainWrapper" class="welcome-card">
       <ion-card-header>
         <ion-card-title text-center>Palkkalaskuri</ion-card-title>
         <ion-card-subtitle text-center>Syötä sopimuksesi {{ contractName }} tiedot</ion-card-subtitle>
@@ -22,26 +22,26 @@
           <ion-label position="floating">Bruttopalkka (€ / kk)</ion-label>
           <ion-input [(ngModel)]="contractSalary" type="numeric"></ion-input>
         </ion-item><br>
-        <div no-pdding text-center *ngIf="contractSalary">
+        <div no-padding text-center *ngIf="!result">
           <ion-button (click)="getPercentEstimate()" >Laske Netto</ion-button>
         </div>
       </ion-card-content>
 
-      <ion-card no-padding class="welcome-card" padding *ngIf="valueCalculator.taxPercentEstimate">
+      <ion-card padding class="welcome-card" id="subWrapper" *ngIf="valueCalculator.taxPercentEstimate">
         <ion-card-header no-padding>
-          <h3 text-center><b>Nettopalkka: {{ contractSalary * (1 - (valueCalculator.taxPercentEstimate / 100)) | number:'1.0-0' }} €/kk </b></h3>
+          <h3 text-center id="highlightText2"><b>Nettopalkka: {{ contractSalary * (1 - (valueCalculator.taxPercentEstimate / 100)) | number:'1.0-0' }} €/kk </b></h3>
           <ion-card-subtitle text-center>Arvioitu veroprosentti: {{ valueCalculator.taxPercentEstimate | number:'1.0-0' }} %</ion-card-subtitle>
           <ion-card-subtitle text-center>Maksetut verot : {{ contractSalary * (valueCalculator.taxPercentEstimate / 100) | number:'1.0-0' }} €/kk</ion-card-subtitle>
         </ion-card-header>
-        <ion-card-content text-center>
+        <ion-card-content no-padding text-center>
             <ion-button padding (click)="saveContractData()">Tallenna sopimus</ion-button>
         </ion-card-content>
       </ion-card>
 
-      <ion-card no-padding padding  *ngIf="dataSaved">
-        <ion-card-header>
-          <ion-title text-center>Tiedot tallennettu!</ion-title><br>
-          <ion-card-subtitle text-center>Voit Lisätä ja tallentaa uuden tiedon tai tarkastella jo tallennettuja tietoja sopimukset -välilehdellä</ion-card-subtitle>
+      <ion-card padding class="welcome-card" id="subWrapper" *ngIf="dataSaved">
+        <ion-card-header no-padding>
+          <h3 text-center id="highlightText2"><b>Tiedot tallennettu!</b><br></h3>
+          <ion-card-subtitle padding text-center>Voit Lisätä ja tallentaa uuden tiedon tai tarkastella jo tallennettuja tietoja sopimukset -välilehdellä</ion-card-subtitle><br>
         </ion-card-header>
       </ion-card>
 
