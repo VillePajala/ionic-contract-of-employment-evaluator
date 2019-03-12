@@ -28,15 +28,18 @@ export class Tab1Page {
     let newContract : any = {
                               "contractName" : this.contractName,
                               "contractSalary" : this.contractSalary,
-                              "contractTax" : this.valueCalculator.taxPercentEstimate
+                              "contractTax" : this.valueCalculator.taxPercentEstimate,
+                              "netSalary" : this.contractSalary * (1 - (this.valueCalculator.taxPercentEstimate / 100))
                             }
 
     this.contractSalary = null;
     this.contractName = "";
     this.valueCalculator.taxPercentEstimate = null;
     this.valueCalculator.contracts.push(newContract);
+    this.valueCalculator.contracts.sort((a,b) => (a.netSalary < b.netSalary) ? 1 : -1);
     this.dataSaved = true;
     this.result = false;
+    
   }
 
   
