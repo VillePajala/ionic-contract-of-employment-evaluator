@@ -15,13 +15,23 @@
       </ion-card-header>
       <ion-card-content>
         <ion-item>
-          <ion-label position="floating">Bruttopalkka (€/kk)</ion-label>
+          <ion-label position="stacked">Bruttopalkka (€/kk)</ion-label>
           <ion-input [(ngModel)]="contractSalary" type="tel"></ion-input>
+        </ion-item>
+        <ion-item *ngIf="AdditionalSettings">
+          <ion-label position="stacked">Vuosibonus (€)</ion-label>
+          <ion-input [(ngModel)]="yearlybonus" type="tel"></ion-input>
         </ion-item><br>
         <div no-padding text-center>
-          <ion-button (click)="getPercentEstimate()" >Laske Netto</ion-button>
+          <ion-button size="small" color="medium" shape="round" (click)="showAdditionalSettings()" >Lisävalinnat</ion-button>
         </div>
+        
+        <div no-padding text-center>
+          <ion-button shape="round" (click)="getPercentEstimate()" >Laske Netto</ion-button><br>
+        </div>
+
       </ion-card-content>
+
 
       <ion-card padding class="welcome-card" id="subWrapper" *ngIf="valueCalculator.taxPercentEstimate">
         <ion-card-header no-padding>
@@ -43,7 +53,6 @@
       <ion-card padding class="welcome-card" id="subWrapper" *ngIf="dataSaved">
         <ion-card-header no-padding>
           <h3 text-center id="highlightText2"><b>Tiedot tallennettu!</b><br></h3>
-          <!-- <ion-card-subtitle padding text-center>Tallennettuja tietoja voit tarkistella tallennetut-välilehdellä</ion-card-subtitle><br> -->
         </ion-card-header>
       </ion-card>
 

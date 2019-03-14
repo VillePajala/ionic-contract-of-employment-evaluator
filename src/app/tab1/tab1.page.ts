@@ -13,7 +13,8 @@ export class Tab1Page {
   contractSalary : number;
   contractTax : number;
   errorMessage : string;
-
+  AdditionalSettings : boolean = false;
+  yearlybonus : number;
   dataSaved : boolean = false;
  
 
@@ -27,18 +28,22 @@ export class Tab1Page {
       this.valueCalculator.taxPercentEstimate = null;
     } else {
       if (this.contractSalary) {
+
+        let x = Number(this.yearlybonus) / 12;
+        this.contractSalary = Number(this.contractSalary) + Number(x);
+
         this.valueCalculator.getPercentEstimate(this.contractSalary);
         this.dataSaved = false;
-       
         this.errorMessage = null;
       } else {
         this.errorMessage = "Kenttää ei voi jättää tyhjäksi"
         this.valueCalculator.taxPercentEstimate = null;
       }
     }
+  }
 
-    
-    
+  showAdditionalSettings = () : void => {
+    this.AdditionalSettings = true;
   }
 
   saveDataAs = async () : Promise<any> => {
@@ -75,6 +80,7 @@ export class Tab1Page {
     let newContract : any = {
                               "contractName" : this.contractName,
                               "contractSalary" : this.contractSalary,
+                              "yearlyBonus" : this.yearlybonus,
                               "contractTax" : this.valueCalculator.taxPercentEstimate,
                               "netSalary" : this.contractSalary * (1 - (this.valueCalculator.taxPercentEstimate / 100))
                             }
@@ -82,9 +88,11 @@ export class Tab1Page {
     this.contractSalary = null;
     this.contractName = "";
     this.valueCalculator.taxPercentEstimate = null;
+    this.dataSaved = true;
+    this.yearlybonus = null;
     this.valueCalculator.contracts.push(newContract);
     this.valueCalculator.contracts.sort((a,b) => (a.netSalary < b.netSalary) ? 1 : -1);
-    this.dataSaved = true;
+    
   }
 
   
