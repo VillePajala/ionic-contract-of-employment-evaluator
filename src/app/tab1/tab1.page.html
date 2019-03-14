@@ -10,17 +10,13 @@
 <ion-content>
     <ion-card id="mainWrapper" class="welcome-card">
       <ion-card-header>
-        <ion-card-title text-center>Palkkalaskuri</ion-card-title>
-        <ion-card-subtitle text-center>Syötä sopimuksesi {{ contractName }} tiedot</ion-card-subtitle>
+        <ion-card-title text-center>Palkkalaskuri</ion-card-title><br>
+        <ion-card-subtitle text-center>Syötä summa</ion-card-subtitle>
       </ion-card-header>
       <ion-card-content>
         <ion-item>
-          <ion-label position="floating">Anna sopimukselle nimi</ion-label>
-          <ion-input [(ngModel)]="contractName" type="text"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label position="floating">Bruttopalkka (€ / kk)</ion-label>
-          <ion-input [(ngModel)]="contractSalary" type="numeric"></ion-input>
+          <ion-label position="floating">Bruttopalkka (€/kk)</ion-label>
+          <ion-input [(ngModel)]="contractSalary" type="tel"></ion-input>
         </ion-item><br>
         <div no-padding text-center *ngIf="!result">
           <ion-button (click)="getPercentEstimate()" >Laske Netto</ion-button>
@@ -34,7 +30,7 @@
           <ion-card-subtitle text-center>Maksetut verot : {{ contractSalary * (valueCalculator.taxPercentEstimate / 100) | number:'1.0-0' }} €/kk</ion-card-subtitle>
         </ion-card-header>
         <ion-card-content no-padding text-center>
-            <ion-button padding (click)="saveContractData()">Tallenna sopimus</ion-button><br><br>
+            <ion-button padding (click)="saveDataAs()">Tallenna</ion-button><br><br>
         </ion-card-content>
       </ion-card>
 

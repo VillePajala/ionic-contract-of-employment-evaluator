@@ -1,5 +1,6 @@
 import { ValuecalculatorService } from './../valuecalculator.service';
 import { Component } from '@angular/core';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-tab1',
@@ -15,7 +16,7 @@ export class Tab1Page {
   dataSaved : boolean = false;
   result : boolean = false;
 
-  constructor(public valueCalculator : ValuecalculatorService) {
+  constructor(public valueCalculator : ValuecalculatorService, private dialogueCtrl : AlertController) {
 
   }
   getPercentEstimate = () : void => {
@@ -23,6 +24,36 @@ export class Tab1Page {
     this.dataSaved = false;
     this.result = true;
   }
+
+  saveDataAs = async () : Promise<any> => {
+    const alertWindow = await this.dialogueCtrl.create({
+                                                    header: "Tallenna nimellä",
+                                                    message : "Millä nimellä tieto tallennetaan?",
+                                                    inputs : [  
+                                                                {
+                                                                  name : "contractName",
+                                                                  type : "text",
+                                                                  placeholder : "esim. yrityksen nimi"
+                                                                }
+                                                              ],
+                                                    buttons : [
+                                                                {
+                                                                  text : "Tallenna",
+                                                                  handler : (data : any) => {
+                                                                            this.contractName = data.contractName;
+                                                                            this.saveContractData();
+                                                                          }
+                                                                },
+                                                                {
+                                                                  text : "Peruuta",
+                                                                  role : "cancel",
+                                                                  cssClass : "secondary"
+                                                                }
+                                                              ]
+                                                      });
+    await alertWindow.present();
+  }
+
 
   saveContractData = () : void => {
     let newContract : any = {
@@ -39,9 +70,7 @@ export class Tab1Page {
     this.valueCalculator.contracts.sort((a,b) => (a.netSalary < b.netSalary) ? 1 : -1);
     this.dataSaved = true;
     this.result = false;
-    
   }
 
   
-
 }
