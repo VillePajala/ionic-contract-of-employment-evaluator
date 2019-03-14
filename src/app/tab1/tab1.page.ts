@@ -15,21 +15,29 @@ export class Tab1Page {
   errorMessage : string;
 
   dataSaved : boolean = false;
-  result : boolean = false;
+ 
 
   constructor(public valueCalculator : ValuecalculatorService, private dialogueCtrl : AlertController) {
 
   }
   getPercentEstimate = () : void => {
-    if (this.contractSalary) {
-      this.valueCalculator.getPercentEstimate(this.contractSalary);
-      this.dataSaved = false;
-      this.result = true;
-      this.errorMessage = null;
+
+    if(isNaN(this.contractSalary)){
+      this.errorMessage = "Syötä vain numeroita";
+      this.valueCalculator.taxPercentEstimate = null;
     } else {
-      this.errorMessage = "Kenttää ei voi jättää tyhjäksi"
-      this.result = false;
+      if (this.contractSalary) {
+        this.valueCalculator.getPercentEstimate(this.contractSalary);
+        this.dataSaved = false;
+       
+        this.errorMessage = null;
+      } else {
+        this.errorMessage = "Kenttää ei voi jättää tyhjäksi"
+        this.valueCalculator.taxPercentEstimate = null;
+      }
     }
+
+    
     
   }
 
@@ -77,7 +85,6 @@ export class Tab1Page {
     this.valueCalculator.contracts.push(newContract);
     this.valueCalculator.contracts.sort((a,b) => (a.netSalary < b.netSalary) ? 1 : -1);
     this.dataSaved = true;
-    this.result = false;
   }
 
   

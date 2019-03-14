@@ -18,7 +18,7 @@
           <ion-label position="floating">Bruttopalkka (€/kk)</ion-label>
           <ion-input [(ngModel)]="contractSalary" type="tel"></ion-input>
         </ion-item><br>
-        <div no-padding text-center *ngIf="!result">
+        <div no-padding text-center>
           <ion-button (click)="getPercentEstimate()" >Laske Netto</ion-button>
         </div>
       </ion-card-content>

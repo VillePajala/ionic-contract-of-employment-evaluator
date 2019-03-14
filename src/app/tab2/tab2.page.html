@@ -15,10 +15,10 @@
     <div *ngIf="valueCalculator.contracts.length > 0">
       <ion-card-header color="info" padding *ngFor="let contract of valueCalculator.contracts">
         <ion-card-subtitle id="highlightText2"><b>{{ contract.contractName }} </b></ion-card-subtitle>
-        <ion-card-subtitle>Bruttopalkka: {{ contract.contractSalary | number:'1.0-0' }} € / kk</ion-card-subtitle>
+        <ion-card-subtitle>Bruttopalkka: {{ contract.contractSalary | number:'1.0-0' }} €/kk</ion-card-subtitle>
         <ion-card-subtitle>Arvioitu veroprosentti: {{ contract.contractTax | number:'1.0-0' }} %</ion-card-subtitle>
-        <ion-card-subtitle>Maksetut verot : {{ contract.contractSalary * (contract.contractTax / 100) | number:'1.0-0' }} € / kk</ion-card-subtitle>
-        <ion-card-subtitle id="highlightText"><b>Nettopalkka: {{ contract.contractSalary * (1 - (contract.contractTax / 100)) | number:'1.0-0' }} € / kk </b></ion-card-subtitle>
+        <ion-card-subtitle>Maksetut verot : {{ contract.contractSalary * (contract.contractTax / 100) | number:'1.0-0' }} €/kk</ion-card-subtitle>
+        <ion-card-subtitle id="highlightText"><b>Nettopalkka: {{ contract.contractSalary * (1 - (contract.contractTax / 100)) | number:'1.0-0' }} €/kk </b></ion-card-subtitle>
       </ion-card-header>
     </div>
   </ion-card>
