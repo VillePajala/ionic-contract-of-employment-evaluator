@@ -34,6 +34,12 @@
         </ion-card-content>
       </ion-card>
 
+      <ion-card padding text-center class="welcome-card" id="subWrapper" *ngIf="errorMessage">
+        <ion-card-header no-padding>
+          <ion-card-subtitle> {{ errorMessage }} </ion-card-subtitle>      
+        </ion-card-header>
+      </ion-card>
+
       <ion-card padding class="welcome-card" id="subWrapper" *ngIf="dataSaved">
         <ion-card-header no-padding>
           <h3 text-center id="highlightText2"><b>Tiedot tallennettu!</b><br></h3>

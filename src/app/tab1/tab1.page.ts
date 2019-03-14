@@ -12,6 +12,7 @@ export class Tab1Page {
   contractName : string;
   contractSalary : number;
   contractTax : number;
+  errorMessage : string;
 
   dataSaved : boolean = false;
   result : boolean = false;
@@ -20,9 +21,16 @@ export class Tab1Page {
 
   }
   getPercentEstimate = () : void => {
-    this.valueCalculator.getPercentEstimate(this.contractSalary);
-    this.dataSaved = false;
-    this.result = true;
+    if (this.contractSalary) {
+      this.valueCalculator.getPercentEstimate(this.contractSalary);
+      this.dataSaved = false;
+      this.result = true;
+      this.errorMessage = null;
+    } else {
+      this.errorMessage = "Kenttää ei voi jättää tyhjäksi"
+      this.result = false;
+    }
+    
   }
 
   saveDataAs = async () : Promise<any> => {
