@@ -11,10 +11,12 @@ export class Tab1Page {
 
   contractName : string;
   contractSalary : number;
+  totalSum : number;
   contractTax : number;
   errorMessage : string;
   AdditionalSettings : boolean = false;
-  yearlybonus : number;
+  yearlyBonus : number;
+  yearlyBonusMonthly : number;
   dataSaved : boolean = false;
 
   
@@ -23,6 +25,15 @@ export class Tab1Page {
   constructor(public valueCalculator : ValuecalculatorService, private dialogueCtrl : AlertController) {
 
   }
+
+  checkInput = () : void => {
+    if(isNaN(this.contractSalary)){
+      this.errorMessage = "Syötä vain numeroita";
+      this.valueCalculator.taxPercentEstimate = null;
+    } else {}
+
+  }
+
   getPercentEstimate = () : void => {
 
     if(isNaN(this.contractSalary)){
@@ -31,10 +42,9 @@ export class Tab1Page {
     } else {
       if (this.contractSalary) {
 
-        let x = Number(this.yearlybonus) / 12;
-        this.contractSalary = Number(this.contractSalary) + Number(x);
-
-        this.valueCalculator.getPercentEstimate(this.contractSalary);
+        this.yearlyBonusMonthly = Number(this.yearlyBonus) / 12;
+        this.totalSum = Number(this.contractSalary) + Number(this.yearlyBonusMonthly);
+        this.valueCalculator.getPercentEstimate(this.totalSum);
         this.dataSaved = false;
         this.errorMessage = null;
       } else {
@@ -82,7 +92,7 @@ export class Tab1Page {
     let newContract : any = {
                               "contractName" : this.contractName,
                               "contractSalary" : this.contractSalary,
-                              "yearlyBonus" : this.yearlybonus,
+                              "yearlyBonus" : this.yearlyBonus,
                               "contractTax" : this.valueCalculator.taxPercentEstimate,
                               "netSalary" : this.contractSalary * (1 - (this.valueCalculator.taxPercentEstimate / 100))
                             }
@@ -91,7 +101,7 @@ export class Tab1Page {
     this.contractName = "";
     this.valueCalculator.taxPercentEstimate = null;
     this.dataSaved = true;
-    this.yearlybonus = null;
+    this.yearlyBonus = null;
     this.valueCalculator.contracts.push(newContract);
     this.valueCalculator.contracts.sort((a,b) => (a.netSalary < b.netSalary) ? 1 : -1);
     
