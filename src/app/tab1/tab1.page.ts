@@ -16,6 +16,8 @@ export class Tab1Page {
   AdditionalSettings : boolean = false;
   yearlybonus : number;
   dataSaved : boolean = false;
+
+  
  
 
   constructor(public valueCalculator : ValuecalculatorService, private dialogueCtrl : AlertController) {
