@@ -15,12 +15,10 @@ export class Tab1Page {
   contractTax : number;
   errorMessage : string;
   AdditionalSettings : boolean = false;
-  yearlyBonus : number;
-  yearlyBonusMonthly : number;
+  yearlyBonus : number = 0;
+  yearlyBonusMonthly : number = 0;
   dataSaved : boolean = false;
 
-  
- 
 
   constructor(public valueCalculator : ValuecalculatorService, private dialogueCtrl : AlertController) {
 
@@ -31,7 +29,6 @@ export class Tab1Page {
       this.errorMessage = "Syötä vain numeroita";
       this.valueCalculator.taxPercentEstimate = null;
     } else {}
-
   }
 
   getPercentEstimate = () : void => {
@@ -41,7 +38,6 @@ export class Tab1Page {
       this.valueCalculator.taxPercentEstimate = null;
     } else {
       if (this.contractSalary) {
-
         this.yearlyBonusMonthly = Number(this.yearlyBonus) / 12;
         this.totalSum = Number(this.contractSalary) + Number(this.yearlyBonusMonthly);
         this.valueCalculator.getPercentEstimate(this.totalSum);

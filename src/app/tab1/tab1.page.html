@@ -20,24 +20,22 @@
         </ion-item>
         <ion-item *ngIf="AdditionalSettings">
           <ion-label position="stacked">Vuosibonus (€)</ion-label>
-          <ion-input [(ngModel)]="yearlybonus" type="tel"></ion-input>
+          <ion-input [(ngModel)]="yearlyBonus" type="tel"></ion-input>
         </ion-item><br>
         <div no-padding text-center>
           <ion-button size="small" color="medium" shape="round" (click)="showAdditionalSettings()" >Lisävalinnat</ion-button>
         </div>
         
         <div no-padding text-center>
-          <ion-button shape="round" (click)="getPercentEstimate()" >Laske Netto</ion-button><br>
+          <ion-button shape="round" (click)="getPercentEstimate()">Laske Netto</ion-button><br>
         </div>
-
       </ion-card-content>
-
 
       <ion-card padding class="welcome-card" id="subWrapper" *ngIf="valueCalculator.taxPercentEstimate">
         <ion-card-header no-padding>
-          <h3 text-center id="highlightText2"><b>Nettopalkka: {{ contractSalary * (1 - (valueCalculator.taxPercentEstimate / 100)) | number:'1.0-0' }} €/kk </b></h3>
+          <h3 text-center id="highlightText2"><b>Nettopalkka: {{ totalSum * (1 - (valueCalculator.taxPercentEstimate / 100)) | number:'1.0-0' }} €/kk </b></h3>
           <ion-card-subtitle text-center>Arvioitu veroprosentti: {{ valueCalculator.taxPercentEstimate | number:'1.0-0' }} %</ion-card-subtitle>
-          <ion-card-subtitle text-center>Maksetut verot : {{ contractSalary * (valueCalculator.taxPercentEstimate / 100) | number:'1.0-0' }} €/kk</ion-card-subtitle>
+          <ion-card-subtitle text-center>Maksetut verot : {{ totalSum * (valueCalculator.taxPercentEstimate / 100) | number:'1.0-0' }} €/kk</ion-card-subtitle>
         </ion-card-header>
         <ion-card-content no-padding text-center>
             <ion-button padding (click)="saveDataAs()">Tallenna</ion-button><br><br>
