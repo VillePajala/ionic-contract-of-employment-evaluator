@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>
+    <ion-title text-center>
       Tallennetut
     </ion-title>
   </ion-toolbar>
@@ -8,7 +8,7 @@
 
 <ion-content>
 
-  <ion-card padding>
+  <ion-card padding id="mainWrapper2">
     <ion-card-header padding *ngIf="valueCalculator.contracts.length == 0">
       Sinulla ei ole vielä yhtään sopimusta
     </ion-card-header>
@@ -22,11 +22,10 @@
             <ion-card-subtitle>Arvioitu veroprosentti: {{ contract.contractTax | number:'1.0-0' }} %</ion-card-subtitle>
             <ion-card-subtitle>Maksetut verot : {{ contract.contractSalary * (contract.contractTax / 100) | number:'1.0-0' }} €/kk</ion-card-subtitle>
             <ion-card-subtitle id="highlightText"><b>Nettopalkka: {{ contract.contractSalary * (1 - (contract.contractTax / 100)) | number:'1.0-0' }} €/kk </b></ion-card-subtitle>
+            <ion-button (click)="confirmDelete(contract.timestamp)" size="small" shape="round">Delete</ion-button>
           </ion-card-header>
         </ion-col>
-        <ion-col size="3"><br><br><br><br><br>
-          <ion-button size="small" shape="round">Delete</ion-button>
-        </ion-col>
+        
 
       </ion-row>
       

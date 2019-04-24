@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>
-      Palkkalaskuri
+    <ion-title text-center>
+      Nettopalkkalaskuri
     </ion-title>
     
   </ion-toolbar>
@@ -10,8 +10,7 @@
 <ion-content>
     <ion-card id="mainWrapper" class="welcome-card">
       <ion-card-header>
-        <ion-card-title text-center>Palkkalaskuri</ion-card-title><br>
-        <ion-card-subtitle text-center>Syötä summa</ion-card-subtitle>
+        <ion-card-title padding text-center>Syötä laskettava<br>bruttopalkka</ion-card-title><br>
       </ion-card-header>
       <ion-card-content>
         <ion-item>
@@ -23,11 +22,10 @@
           <ion-input [(ngModel)]="yearlyBonus" type="tel"></ion-input>
         </ion-item><br>
         <div no-padding text-center>
-          <ion-button size="small" color="medium" shape="round" (click)="showAdditionalSettings()" >Lisävalinnat</ion-button>
-        </div>
-        
-        <div no-padding text-center>
           <ion-button shape="round" (click)="getPercentEstimate()">Laske Netto</ion-button><br>
+        </div>
+        <div no-padding text-center>
+          <ion-button size="small" color="medium" shape="round" (click)="showAdditionalSettings()" >Lisävalinnat</ion-button>
         </div>
       </ion-card-content>
 

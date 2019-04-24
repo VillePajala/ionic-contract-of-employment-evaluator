@@ -85,12 +85,14 @@ export class Tab1Page {
 
 
   saveContractData = () : void => {
+    let timestamp = new Date().getTime();
     let newContract : any = {
                               "contractName" : this.contractName,
                               "contractSalary" : this.contractSalary,
                               "yearlyBonus" : this.yearlyBonus,
                               "contractTax" : this.valueCalculator.taxPercentEstimate,
-                              "netSalary" : this.contractSalary * (1 - (this.valueCalculator.taxPercentEstimate / 100))
+                              "netSalary" : this.contractSalary * (1 - (this.valueCalculator.taxPercentEstimate / 100)),
+                              "timestamp" : timestamp
                             }
 
     this.contractSalary = null;

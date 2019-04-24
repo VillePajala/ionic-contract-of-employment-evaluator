@@ -14,35 +14,38 @@
   },
   "private": true,
   "dependencies": {
-    "@angular-devkit/build-angular": "~0.12.3",
+    "@angular/cli": "~7.2.3",
     "@angular/common": "^7.2.2",
+    "@angular/compiler": "~7.2.2",
+    "@angular/compiler-cli": "~7.2.2",
     "@angular/core": "^7.2.2",
     "@angular/forms": "^7.2.2",
     "@angular/http": "^7.2.2",
     "@angular/platform-browser": "^7.2.2",
     "@angular/platform-browser-dynamic": "^7.2.2",
+    "@angular/pwa": "^0.13.8",
     "@angular/router": "^7.2.2",
+    "@angular/service-worker": "^7.2.2",
     "@ionic-native/core": "^5.0.0",
     "@ionic-native/splash-screen": "^5.0.0",
+    "@ionic-native/sqlite": "^5.5.0",
     "@ionic-native/status-bar": "^5.0.0",
     "@ionic/angular": "^4.0.0",
     "body-parser": "^1.18.3",
     "cordova-android": "^7.1.4",
+    "cordova-sqlite-storage": "3.2.0",
     "core-js": "^2.5.4",
     "cors": "^2.8.5",
     "express": "^4.16.4",
     "ionic": "^4.10.3",
     "morgan": "^1.9.1",
     "rxjs": "~6.3.3",
-    "zone.js": "~0.8.29",
-    "@angular/cli": "~7.2.3",
-    "@angular/compiler": "~7.2.2",
-    "@angular/compiler-cli": "~7.2.2",
-    "typescript": "~3.1.6"
+    "typescript": "~3.1.6",
+    "zone.js": "~0.8.29"
   },
   "devDependencies": {
     "@angular-devkit/architect": "~0.12.3",
-    "@angular-devkit/build-angular": "~0.12.3",
+    "@angular-devkit/build-angular": "^0.13.8",
     "@angular-devkit/core": "~7.2.3",
     "@angular-devkit/schematics": "~7.2.3",
     "@angular/cli": "~7.2.3",
@@ -67,5 +70,10 @@
     "typescript": "~3.1.6"
   },
   "description": "An Ionic project",
-  "heroku-run-build-script": true
+  "heroku-run-build-script": true,
+  "cordova": {
+    "plugins": {
+      "cordova-sqlite-storage": {}
+    }
+  }
 }
