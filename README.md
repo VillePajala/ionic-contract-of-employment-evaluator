@@ -5,10 +5,13 @@ A mobile (hybrid) app to calculate contract's net worth after taxes, reductions 
 ## Current Features
 
 * User can input monthly gross salary
+* User can input yearly bonus
 * Program calculates an estimate of the tax rate which the user would have with input salary
 * Program calculates the monthly net salary
 * User can save the calculation with a name id
 * All saved items are displayed in a separate tab sorted by net value
+* Items can be deleted
+* Deployed to heroku as a PWA
 
 ## Future Features
 
