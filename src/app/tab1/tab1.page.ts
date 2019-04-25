@@ -18,6 +18,7 @@ export class Tab1Page {
   yearlyBonus : number = 0;
   yearlyBonusMonthly : number = 0;
   dataSaved : boolean = false;
+  AdditionalSettingstext : string = "Näytä";
 
 
   constructor(public valueCalculator : ValuecalculatorService, private dialogueCtrl : AlertController) {
@@ -51,7 +52,14 @@ export class Tab1Page {
   }
 
   showAdditionalSettings = () : void => {
-    this.AdditionalSettings = true;
+    if (this.AdditionalSettings == false) {
+      this.AdditionalSettings = true;
+      this.AdditionalSettingstext = "Piilota";
+    } else {
+      this.AdditionalSettings = false;
+      this.AdditionalSettingstext = "Näytä";
+    }
+    
   }
 
   saveDataAs = async () : Promise<any> => {
@@ -112,6 +120,4 @@ export class Tab1Page {
     }, 2000);
   }
     
-
-  
 }
