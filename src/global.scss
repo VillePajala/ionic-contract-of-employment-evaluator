@@ -28,7 +28,7 @@
 #highlightText2 {
     text-transform: uppercase;
     padding: 5px 0;
-    color: hotpink;
+    color: white;
     font-size: 18px;
 }
 .toolbarColor {
@@ -43,7 +43,7 @@
 }
 .iconColor {
     --color: white;
-    --color-selected: rgb(1, 228, 236);
+    --color-selected:#3880ff;
 }
 .appBackground {
     --background: linear-gradient(#3f3f3f, #000000);
@@ -53,13 +53,13 @@
     padding: 0 5px;
     min-height: 500px;
     max-width: 500px;
-    background: linear-gradient(#929292,#3f3f3f);
+    background: linear-gradient(#929292,#6b6a6a);
 }
 .mainCard2 {
     margin: auto;
     padding: 0 5px;
     max-width: 300px;
-    background: linear-gradient(#929292,#3f3f3f);
+    background: linear-gradient(#929292,#838282);
     
 }
 .appFrame {

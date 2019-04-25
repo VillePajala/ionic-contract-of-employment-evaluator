@@ -102,8 +102,16 @@ export class Tab1Page {
     this.yearlyBonus = null;
     this.valueCalculator.contracts.push(newContract);
     this.valueCalculator.contracts.sort((a,b) => (a.netSalary < b.netSalary) ? 1 : -1);
+    this.fadeOutSaveMessage();
     
   }
+
+  fadeOutSaveMessage = () : void => {
+    setTimeout(() => {
+      this.dataSaved = false;
+    }, 2000);
+  }
+    
 
   
 }
