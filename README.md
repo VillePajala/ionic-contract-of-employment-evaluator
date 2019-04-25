@@ -16,14 +16,14 @@ A mobile (hybrid) app to calculate contract's net worth after taxes, reductions 
 ## Future Features
 
 * User has the option to add more details to the calculations such as benefits or reductions
-* Saved items can be removed and edited
-* User can create a account and save his/her data for future use
+* Saved items can be edited
+* User can save data to phone
 
 ## Tech Used
 
 * Ionic 4
 * TypeScript
-* JavaScript Es6
+* JavaScript ES6
 * HTML
 * CSS
 
