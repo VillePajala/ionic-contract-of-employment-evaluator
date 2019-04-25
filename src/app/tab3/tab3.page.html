@@ -1,31 +1,34 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title text-center>
+  <ion-toolbar class="toolbarColor">
+    <ion-title text-center class="titleText">
       Tietoja sovelluksesta
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-    <ion-card padding id="mainWrapper2">
+<ion-content class="appBackground">
+    <ion-card padding class="mainCard">
       <ion-card-header color="info" padding>
-        <ion-card-title padding>
+        <ion-card-title padding class="cardHeader">
           Sovelluksen laskentalogiikasta:  
         </ion-card-title>
-        <ion-card-subtitle padding>
+        <ion-card-subtitle class="ion-padding-horizontal">
             Arvioidut veroprosentit, joiden perusteella laskenta tehdään, sisältävät 
             Verohallinnon keräämät tuloverot (valtion tulovero, 
             kunnallisvero, kirkollisvero, yleisradiovero, sairausvakuutuksen sairaanhoito- 
             ja päivärahamaksut) sekä pakolliset palkasta pidätettävät veronluonteiset 
             työeläke- (ei sisällä 53-62-vuotiaiden korotusosuutta) ja 
             työttömyysvakuutusmaksut. 
-    
-            Laskelmissa on käytetty keskimääräisiä kunnallis- ja kirkollisveroprosentteja 
-            ja huomiotu automaattisesti verottajan viran puolesta tekemät palkkatuloihin 
-            kohdistuvat vähennykset, joita ovat kunnallisverotuksen perusvähennys ja 
-            ansiotulovähennys, tulonhankkimisvähennys sekä työtulovähennys. Vuositulo 
-            verotusta varten on laskelmissa 12,5 x kk-palkka (lomarahat huomioiden).   
         </ion-card-subtitle>
+        <ion-card-subtitle class="ion-padding-horizontal">
+          Laskelmissa on käytetty keskimääräisiä kunnallis- ja kirkollisveroprosentteja 
+          ja huomiotu automaattisesti verottajan viran puolesta tekemät palkkatuloihin 
+          kohdistuvat vähennykset, joita ovat kunnallisverotuksen perusvähennys ja 
+          ansiotulovähennys, tulonhankkimisvähennys sekä työtulovähennys. Vuositulo 
+          verotusta varten on laskelmissa 12,5 x kk-palkka (lomarahat huomioiden).
+        </ion-card-subtitle>
+               
+        
       </ion-card-header>
     </ion-card>
   

@@ -1,16 +1,15 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title text-center>
+  <ion-toolbar class="toolbarColor">
+    <ion-title text-center class="titleText">
       Nettopalkkalaskuri
     </ion-title>
-    
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-    <ion-card id="mainWrapper" class="welcome-card">
+<ion-content class="appBackground">
+    <ion-card class="mainCard">
       <ion-card-header>
-        <ion-card-title padding text-center>Syötä laskettava<br>bruttopalkka</ion-card-title><br>
+        <ion-card-title class="cardHeader" padding text-center>Syötä laskettava<br>bruttopalkka</ion-card-title><br>
       </ion-card-header>
       <ion-card-content>
         <ion-item>
@@ -29,7 +28,7 @@
         </div>
       </ion-card-content>
 
-      <ion-card padding class="welcome-card" id="subWrapper" *ngIf="valueCalculator.taxPercentEstimate">
+      <ion-card class="mainCard2" padding  *ngIf="valueCalculator.taxPercentEstimate">
         <ion-card-header no-padding>
           <h3 text-center id="highlightText2"><b>Nettopalkka: {{ totalSum * (1 - (valueCalculator.taxPercentEstimate / 100)) | number:'1.0-0' }} €/kk </b></h3>
           <ion-card-subtitle text-center>Arvioitu veroprosentti: {{ valueCalculator.taxPercentEstimate | number:'1.0-0' }} %</ion-card-subtitle>
@@ -40,19 +39,19 @@
         </ion-card-content>
       </ion-card>
 
-      <ion-card padding text-center class="welcome-card" id="subWrapper" *ngIf="errorMessage">
-        <ion-card-header no-padding>
+      <ion-card padding text-center class="mainCard2" *ngIf="errorMessage">
+        <ion-card-header padding>
           <ion-card-subtitle> {{ errorMessage }} </ion-card-subtitle>      
         </ion-card-header>
       </ion-card>
 
-      <ion-card padding class="welcome-card" id="subWrapper" *ngIf="dataSaved">
-        <ion-card-header no-padding>
+      <ion-card padding class="mainCard2" *ngIf="dataSaved">
+        <ion-card-header padding>
           <h3 text-center id="highlightText2"><b>Tiedot tallennettu!</b><br></h3>
         </ion-card-header>
       </ion-card>
 
-
+      <br>
     </ion-card>
 
    
