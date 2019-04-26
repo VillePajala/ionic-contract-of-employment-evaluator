@@ -27,7 +27,7 @@ A mobile (hybrid) app to calculate contract's net worth after taxes, reductions 
 * HTML
 * CSS
 
-### Screenshots
+## Screenshots
 
 ![](src/assets/img/screenshot1.png)
 ![](src/assets/img/screenshot2.png)
