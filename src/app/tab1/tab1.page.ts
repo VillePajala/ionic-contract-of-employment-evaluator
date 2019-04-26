@@ -64,8 +64,8 @@ export class Tab1Page {
 
   saveDataAs = async () : Promise<any> => {
     const alertWindow = await this.dialogueCtrl.create({
-                                                    header: "Tallenna nimellä",
-                                                    message : "Millä nimellä tieto tallennetaan?",
+                                                    header: "Millä nimellä summa tallennetaan?",
+                                                    message : "Huom! Tiedot katoavat, kun ohjelma sammutetaan.",
                                                     inputs : [  
                                                                 {
                                                                   name : "contractName",

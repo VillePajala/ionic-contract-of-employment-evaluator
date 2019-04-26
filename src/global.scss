@@ -22,7 +22,7 @@
 }
 #highlightText {
     padding: 5px 0;
-    color: hotpink;
+    color: white;
     font-size: 16px;
 }
 #highlightText2 {
@@ -50,16 +50,18 @@
 }
 .mainCard {
     margin: auto;
-    padding: 0 5px;
+    padding: 0px 5px;
     min-height: 500px;
+    margin: 10px 20px;
     max-width: 500px;
     background: linear-gradient(#929292,#6b6a6a);
 }
 .mainCard2 {
     margin: auto;
-    padding: 0 5px;
+    padding: 0px 5px;
+    margin-bottom: 5px;
     max-width: 300px;
-    background: linear-gradient(#929292,#838282);
+    background: linear-gradient(#adadad,#9e9d9d);
     
 }
 .appFrame {
@@ -71,5 +73,10 @@ ion-card-title {
     color: white;
 }
 ion-card-subtitle {
-    color: white;
+    color: rgb(228, 227, 227);
+}
+.centerObject {
+    margin: auto;
+    text-align: center;
+    padding-top: 3px;
 }

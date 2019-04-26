@@ -7,29 +7,44 @@
 </ion-header>
 
 <ion-content class="appBackground">
-  <ion-card padding class="mainCard2">
-    <ion-card-header padding *ngIf="valueCalculator.contracts.length == 0">
-      <ion-card-subtitle text-center>Sinulla ei ole vielä yhtään sopimusta</ion-card-subtitle>
-    </ion-card-header>
+  
+    <div>
+      <ion-card class="mainCard2" *ngIf="valueCalculator.contracts.length == 0">
+        <ion-card-header padding>
+          <ion-card-subtitle text-center>Sinulla ei ole vielä yhtään sopimusta</ion-card-subtitle>
+        </ion-card-header>
+      </ion-card>
+    </div>
+    
     <ion-grid *ngIf="valueCalculator.contracts.length > 0">
       <ion-row>
         <ion-col>
-          <ion-card-header color="info" padding *ngFor="let contract of valueCalculator.contracts">
-            <ion-card-subtitle id="highlightText2"><b>{{ contract.contractName }} </b></ion-card-subtitle>
-            <ion-card-subtitle>Bruttopalkka: {{ contract.contractSalary | number:'1.0-0' }} €/kk</ion-card-subtitle>
-            <ion-card-subtitle>Vuosibonus: {{ contract.yearlyBonus | number:'1.0-0' }} €/kk</ion-card-subtitle>
-            <ion-card-subtitle>Arvioitu veroprosentti: {{ contract.contractTax | number:'1.0-0' }} %</ion-card-subtitle>
-            <ion-card-subtitle>Maksetut verot : {{ contract.contractSalary * (contract.contractTax / 100) | number:'1.0-0' }} €/kk</ion-card-subtitle>
-            <ion-card-subtitle id="highlightText"><b>Nettopalkka: {{ contract.contractSalary * (1 - (contract.contractTax / 100)) | number:'1.0-0' }} €/kk </b></ion-card-subtitle>
-            <ion-button (click)="confirmDelete(contract.timestamp)" size="small" shape="round">Delete</ion-button>
-          </ion-card-header>
+          <div *ngFor="let contract of valueCalculator.contracts">
+            <ion-card class="mainCard2">
+              <div class="centerObject">
+                <ion-card-header color="info" padding>
+                  <ion-card-subtitle id="highlightText2"><b>{{ contract.contractName }} </b></ion-card-subtitle>
+                  <ion-card-subtitle>Bruttopalkka: {{ contract.contractSalary | number:'1.0-0' }} €/kk</ion-card-subtitle>
+                  <ion-card-subtitle>Vuosibonus: {{ contract.yearlyBonus | number:'1.0-0' }} €/kk</ion-card-subtitle>
+                  <ion-card-subtitle>Arvioitu veroprosentti: {{ contract.contractTax | number:'1.0-0' }} %</ion-card-subtitle>
+                  <ion-card-subtitle>Maksetut verot : {{ contract.contractSalary * (contract.contractTax / 100) | number:'1.0-0' }} €/kk</ion-card-subtitle>
+                  <ion-card-subtitle id="highlightText"><b>Nettopalkka: {{ contract.contractSalary * (1 - (contract.contractTax / 100)) | number:'1.0-0' }} €/kk </b></ion-card-subtitle>
+                  <div class="centerObject">
+                    <ion-button (click)="confirmDelete(contract.timestamp)" size="small" shape="round">Delete</ion-button>
+                  </div>
+                </ion-card-header>
+              </div>
+              
+            </ion-card>
+          </div>
+          
         </ion-col>
         
 
       </ion-row>
       
     </ion-grid>
-  </ion-card>
+  
   
 
 </ion-content>

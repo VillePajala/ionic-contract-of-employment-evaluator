@@ -21,8 +21,7 @@ constructor(public valueCalculator : ValuecalculatorService,
   confirmDelete = async (id) : Promise<any> => {
     let identification = id;
     const alertWindow = await this.dialogueCtrl.create({
-                                                    header: "Varoitus!",
-                                                    message : "Haluatko varmasti poistaa?",
+                                                    header: "Haluatko varmasti poistaa tiedon?",
                                                     inputs : [  
                                                               ],
                                                     buttons : [
