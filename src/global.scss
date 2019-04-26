@@ -49,10 +49,9 @@
     --background: linear-gradient(#3f3f3f, #000000);
 }
 .mainCard {
-    margin: auto;
     padding: 0px 5px;
     min-height: 500px;
-    margin: 10px 20px;
+    margin: 0px 20px;
     max-width: 500px;
     background: linear-gradient(#929292,#6b6a6a);
 }
@@ -61,8 +60,7 @@
     padding: 0px 5px;
     margin-bottom: 5px;
     max-width: 300px;
-    background: linear-gradient(#adadad,#9e9d9d);
-    
+    background: linear-gradient(#929292,#838282);
 }
 .appFrame {
     margin: auto;
@@ -73,10 +71,19 @@ ion-card-title {
     color: white;
 }
 ion-card-subtitle {
-    color: rgb(228, 227, 227);
+    color: rgb(216, 214, 214);
 }
 .centerObject {
     margin: auto;
     text-align: center;
     padding-top: 3px;
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 576px) {
+    .mainCard {
+        margin: auto;
+
+    }
+    
 }
