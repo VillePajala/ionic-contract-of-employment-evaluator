@@ -32,6 +32,7 @@ export class Tab1Page {
     } else {}
   }
 
+
   getPercentEstimate = () : void => {
 
     if(isNaN(this.contractSalary)){
@@ -51,6 +52,7 @@ export class Tab1Page {
     }
   }
 
+
   showAdditionalSettings = () : void => {
     if (this.AdditionalSettings == false) {
       this.AdditionalSettings = true;
@@ -59,7 +61,6 @@ export class Tab1Page {
       this.AdditionalSettings = false;
       this.AdditionalSettingstext = "Näytä";
     }
-    
   }
 
   saveDataAs = async () : Promise<any> => {
@@ -99,7 +100,8 @@ export class Tab1Page {
                               "contractSalary" : this.contractSalary,
                               "yearlyBonus" : this.yearlyBonus,
                               "contractTax" : this.valueCalculator.taxPercentEstimate,
-                              "netSalary" : this.contractSalary * (1 - (this.valueCalculator.taxPercentEstimate / 100)),
+                              "taxPaid" :  this.totalSum * (this.valueCalculator.taxPercentEstimate / 100),
+                              "netSalary" : this.totalSum * (1 - (this.valueCalculator.taxPercentEstimate / 100)),
                               "timestamp" : timestamp
                             }
 
@@ -121,3 +123,5 @@ export class Tab1Page {
   }
     
 }
+
+
