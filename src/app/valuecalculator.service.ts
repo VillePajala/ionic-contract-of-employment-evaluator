@@ -11,7 +11,6 @@ export class ValuecalculatorService {
 
   getPercentEstimate = (id) : void => {
     let yearSalary = 12.5 * id;
-    console.log(yearSalary)
 
     if (yearSalary >= 1 && yearSalary <= 14000) {
       this.taxPercentEstimate = 8.3;

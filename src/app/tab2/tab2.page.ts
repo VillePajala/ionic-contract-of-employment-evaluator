@@ -45,9 +45,10 @@ constructor(public valueCalculator : ValuecalculatorService,
     let i = 0;
     this.valueCalculator.contracts.forEach((contract) => {
       if (contract.timestamp == id) {
-        this.valueCalculator.contracts.splice(i);
+        this.valueCalculator.contracts.splice(i, 1);
       }
       i = i + 1;
+      
     })
   }
 
