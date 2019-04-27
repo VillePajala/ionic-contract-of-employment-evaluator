@@ -25,7 +25,6 @@
             <div class="centerObject">
               <ion-card-header color="info" padding>
                 <ion-card-subtitle id="highlightText2"><b>{{ contract.contractName }} </b></ion-card-subtitle>
-                {{ contract.timestamp }}
                 <ion-card-subtitle>Bruttopalkka: {{ contract.contractSalary | number:'1.0-0' }} €/kk</ion-card-subtitle>
                 <ion-card-subtitle>Vuosibonus: {{ contract.yearlyBonus | number:'1.0-0' }} €/vuosi</ion-card-subtitle>
                 <ion-card-subtitle>Arvioitu veroprosentti: {{ contract.contractTax | number:'1.0-0' }} %</ion-card-subtitle>

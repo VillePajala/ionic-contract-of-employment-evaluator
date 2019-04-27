@@ -10,6 +10,13 @@
 @import '~@ionic/angular/css/text-transformation.css';
 @import '~@ionic/angular/css/flex-utils.css';
 
+@font-face {
+    font-family: 'lemonMilk';
+    font-style: normal;
+    font-weight: normal;
+    src: url('./assets/fonts/LemonMilk.otf');
+}
+
 
 #mainWrapper {
 }
@@ -33,6 +40,7 @@
 }
 .toolbarColor {
     --background: linear-gradient(#3f3f3f, #000000);
+    font-family: lemonMilk;
 }
   
 .titleText {
@@ -50,8 +58,8 @@
 }
 .mainCard {
     padding: 0px 5px;
-    min-height: 500px;
-    margin: 0px 20px;
+    min-height: 450px;
+    margin: 10px 20px;
     max-width: 500px;
     background: linear-gradient(#929292,#6b6a6a);
 }
@@ -59,6 +67,7 @@
     margin: auto;
     padding: 0px 5px;
     margin-bottom: 5px;
+    margin-top: 10px;
     max-width: 300px;
     background: linear-gradient(#929292,#838282);
 }
@@ -67,6 +76,7 @@
 }
 ion-card-title {
     transform: translate(0px, 5px);
+    font-family: lemonMilk;
     font-size: 20px;
     color: white;
 }
