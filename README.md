@@ -17,6 +17,7 @@ or as pwa in Heroku: https://nettopalkkalaskuri.herokuapp.com
 * All saved items are displayed in a separate tab sorted by net value
 * Items can be deleted
 * Deployed to heroku as a PWA
+* Also available as a Android app in Play store
 
 ## Future Features
 
