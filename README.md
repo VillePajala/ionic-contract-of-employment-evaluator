@@ -5,7 +5,6 @@ A mobile (hybrid) app to calculate contract's net worth after taxes, reductions 
 Available as an Android app in Play store: https://play.google.com/store/apps/details?id=com.test.nettopalkkalaskuri
 or as pwa in Heroku: https://nettopalkkalaskuri.herokuapp.com
 
-![](src/assets/img/play.png)(https://www.youtube.com/embed/MSvFKWTAOIo)
 
 ## Current Features
 
