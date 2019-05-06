@@ -7,6 +7,8 @@ or as pwa in Heroku: https://nettopalkkalaskuri.herokuapp.com
 
 ![](src/assets/img/play.png)
 
+[![Nettopalkkalaskuri](src/assets/img/play.png)](http://google.com)
+
 ## Current Features
 
 * User can input monthly gross salary
