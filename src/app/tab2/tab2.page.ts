@@ -1,3 +1,4 @@
+import { DatabaseService } from './../database.service';
 import { AlertController } from '@ionic/angular';
 import { ValuecalculatorService } from './../valuecalculator.service';
 import { Component } from '@angular/core';
@@ -14,7 +15,8 @@ contractPension2 : number = 0.0825;
 contractUnemploymentInsurance : number = 0.015 
 
 constructor(public valueCalculator : ValuecalculatorService,
-            private dialogueCtrl : AlertController) {
+            private dialogueCtrl : AlertController,
+            public database : DatabaseService) {
 
   }
 
@@ -28,7 +30,7 @@ constructor(public valueCalculator : ValuecalculatorService,
                                                                 {
                                                                   text : "Poista",
                                                                   handler : (data : any) => {
-                                                                            this.deleteImage(identification);
+                                                                            this.database.deleteContract(identification);
                                                                           }
                                                                 },
                                                                 {
@@ -41,15 +43,6 @@ constructor(public valueCalculator : ValuecalculatorService,
     await alertWindow.present();
   }
 
-  deleteImage = (id) : void => {
-    let i = 0;
-    this.valueCalculator.contracts.forEach((contract) => {
-      if (contract.timestamp == id) {
-        this.valueCalculator.contracts.splice(i, 1);
-      }
-      i = i + 1;
-      
-    })
-  }
-
 }
+
+

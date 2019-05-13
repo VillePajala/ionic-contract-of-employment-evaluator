@@ -9,18 +9,18 @@
 <ion-content class="appBackground">
   
   <div>
-    <ion-card class="mainCard2" *ngIf="valueCalculator.contracts.length == 0">
+    <ion-card class="mainCard2" *ngIf="database.contracts.length == 0">  
       <ion-card-header padding>
         <ion-card-subtitle text-center>Sinulla ei ole vielä yhtään sopimusta</ion-card-subtitle>
       </ion-card-header>
     </ion-card>
   </div>
     
-  <ion-grid *ngIf="valueCalculator.contracts.length > 0">
+  <ion-grid *ngIf="database.contracts.length > 0">
     <ion-row>
       <ion-col>
 
-        <div *ngFor="let contract of valueCalculator.contracts">
+        <div *ngFor="let contract of database.contracts">
           <ion-card class="mainCard2">
             <div class="centerObject">
               <ion-card-header color="info" padding>
@@ -31,7 +31,7 @@
                 <ion-card-subtitle>Maksetut verot : {{ contract.taxPaid | number:'1.0-0' }} €/kk</ion-card-subtitle>
                 <ion-card-subtitle id="highlightText"><b>Nettopalkka: {{ contract.netSalary | number:'1.0-0' }} €/kk </b></ion-card-subtitle>
                 <div class="centerObject">
-                  <ion-button (click)="confirmDelete(contract.timestamp)" size="small" shape="round">Delete</ion-button>
+                  <ion-button (click)="confirmDelete(contract.timestamp)" size="small" shape="round">Poista</ion-button>
                 </div>
               </ion-card-header>
             </div>

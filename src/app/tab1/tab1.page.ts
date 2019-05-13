@@ -1,3 +1,4 @@
+import { DatabaseService } from './../database.service';
 import { ValuecalculatorService } from './../valuecalculator.service';
 import { Component } from '@angular/core';
 import { AlertController } from '@ionic/angular';
@@ -21,7 +22,9 @@ export class Tab1Page {
   AdditionalSettingstext : string = "Näytä";
 
 
-  constructor(public valueCalculator : ValuecalculatorService, private dialogueCtrl : AlertController) {
+  constructor(public valueCalculator : ValuecalculatorService, 
+              private dialogueCtrl : AlertController,
+              public database : DatabaseService) {
 
   }
 
@@ -36,7 +39,7 @@ export class Tab1Page {
   getPercentEstimate = () : void => {
 
     if(isNaN(this.contractSalary)){
-      this.errorMessage = "Syötä vain numeroita";
+      this.errorMessage = "Tarkista summa"
       this.valueCalculator.taxPercentEstimate = null;
     } else {
       if (this.contractSalary) {
@@ -46,7 +49,7 @@ export class Tab1Page {
         this.dataSaved = false;
         this.errorMessage = null;
       } else {
-        this.errorMessage = "Kenttää ei voi jättää tyhjäksi"
+        this.errorMessage = "Tarkista summa"
         this.valueCalculator.taxPercentEstimate = null;
       }
     }
@@ -110,8 +113,9 @@ export class Tab1Page {
     this.valueCalculator.taxPercentEstimate = null;
     this.dataSaved = true;
     this.yearlyBonus = null;
-    this.valueCalculator.contracts.push(newContract);
-    this.valueCalculator.contracts.sort((a,b) => (a.netSalary < b.netSalary) ? 1 : -1);
+    this.database.newContract(newContract);
+    //this.valueCalculator.contracts.push(newContract);
+    //this.valueCalculator.contracts.sort((a,b) => (a.netSalary < b.netSalary) ? 1 : -1);
     this.fadeOutSaveMessage();
     
   }
