@@ -1,5 +1,5 @@
 import { DatabaseService } from './../database.service';
-import { AlertController } from '@ionic/angular';
+import { AlertController, Platform } from '@ionic/angular';
 import { ValuecalculatorService } from './../valuecalculator.service';
 import { Component } from '@angular/core';
 
@@ -16,7 +16,8 @@ contractUnemploymentInsurance : number = 0.015
 
 constructor(public valueCalculator : ValuecalculatorService,
             private dialogueCtrl : AlertController,
-            public database : DatabaseService) {
+            public database : DatabaseService,
+            private platform : Platform) {
 
   }
 
@@ -42,6 +43,8 @@ constructor(public valueCalculator : ValuecalculatorService,
                                                       });
     await alertWindow.present();
   }
+
+  
 
 }
 
