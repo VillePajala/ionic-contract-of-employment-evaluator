@@ -1,4 +1,6 @@
+import { Platform } from '@ionic/angular';
 import { Component } from '@angular/core';
+
 
 @Component({
   selector: 'app-tabs',
@@ -7,14 +9,17 @@ import { Component } from '@angular/core';
 })
 export class TabsPage {
 
-  constructor () {
+  constructor (private platform : Platform) {
 
   }
 
   closeApp = () : void => {
     navigator['app'].exitApp();
+    //this.platform.exitApp();
   }
 
 }
+
+
 
 
