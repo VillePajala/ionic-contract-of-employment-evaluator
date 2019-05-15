@@ -12,10 +12,13 @@ export class TabsPage {
   constructor (private platform : Platform) {
 
   }
+  
 
   closeApp = () : void => {
-    navigator['app'].exitApp();
-    //this.platform.exitApp();
+    
+    this.platform.backButton.subscribe(() => {
+      navigator['app'].exitApp();
+    })
   }
 
 }
