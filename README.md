@@ -32,6 +32,15 @@ Available as an Android app in Play store: https://play.google.com/store/apps/de
 * HTML
 * CSS
 
+## Installation & Development
+1. clone this repo: git clone https://github.com/VillePajala/ionic-contract-of-employment-evaluator.git
+2. cd ionic-contract-of-employment-evaluator
+3. npm install
+4. run ionic serve from a terminal to run in browser
+5. To run on mobile device, install ionic devapp
+6. Connect the mobile device and your development computer to same internet
+7. Run ionic serve >--devapp
+
 ## Screenshots
 
 ![](src/assets/img/screenshot1.png)
