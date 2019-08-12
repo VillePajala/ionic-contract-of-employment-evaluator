@@ -39,7 +39,7 @@ Available as an Android app in Play store: https://play.google.com/store/apps/de
 4. run ionic serve from a terminal to run in browser
 5. To run on mobile device, install ionic devapp
 6. Connect the mobile device and your development computer to same internet
-7. Run ionic serve >--devapp
+7. Run `ionic serve --devapp`
 
 ## Screenshots
 
