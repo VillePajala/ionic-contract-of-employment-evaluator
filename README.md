@@ -25,6 +25,7 @@ Available as an Android app in Play store: https://play.google.com/store/apps/de
 ## Future Features
 * User has the option to add more details to the calculations such as benefits or reductions
 * Saved items can be edited
+* Saved items can be sorted by result and date added
 
 
 ## Tech Used
