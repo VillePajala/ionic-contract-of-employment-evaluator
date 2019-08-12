@@ -20,6 +20,7 @@ export class Tab1Page {
   yearlyBonus : number = 0;
   yearlyBonusMonthly : number = 0;
   dataSaved : boolean = false;
+  commaToDot : string = "";
   
 
 
@@ -31,17 +32,33 @@ export class Tab1Page {
   }
 
   checkInput = () : void => {
+    this.commaToDot = this.contractSalary.toString();
+    this.commaToDot = this.commaToDot.replace(/\./g, '').replace(',', '.');
+    this.contractSalary = Number(this.commaToDot)
+
     if(isNaN(this.contractSalary)){
-      this.errorMessage = "Syötä vain numeroita";
+      if (this.languageSelector.language == 'fi') {
+        this.errorMessage = "Tarkista summa. Käytä vain numeroita.";
+      } else {
+        this.errorMessage = "Check value. Use only numbers";
+      }
+      
       this.valueCalculator.taxPercentEstimate = null;
     } else {}
   }
 
 
   getPercentEstimate = () : void => {
-
+    this.commaToDot = this.contractSalary.toString();
+    this.commaToDot = this.commaToDot.replace(/\./g, '').replace(',', '.');
+    this.contractSalary = Number(this.commaToDot)
+    
     if(isNaN(this.contractSalary)){
-      this.errorMessage = "Tarkista summa"
+      if (this.languageSelector.language == 'fi') {
+        this.errorMessage = "Tarkista summa. Käytä vain numeroita.";
+      } else {
+        this.errorMessage = "Check value. Use only numbers";
+      }
       this.valueCalculator.taxPercentEstimate = null;
     } else {
       if (this.contractSalary) {
@@ -51,7 +68,10 @@ export class Tab1Page {
         this.dataSaved = false;
         this.errorMessage = null;
       } else {
-        this.errorMessage = "Tarkista summa"
+        if (this.languageSelector.language == 'fi') {
+          this.errorMessage = "Tarkista summa. Käytä vain numeroita.";
+          this.errorMessage = "Check value. Use only numbers";
+        }
         this.valueCalculator.taxPercentEstimate = null;
       }
     }
@@ -141,8 +161,6 @@ export class Tab1Page {
     this.dataSaved = true;
     this.yearlyBonus = null;
     this.database.newContract(newContract);
-    //this.valueCalculator.contracts.push(newContract);
-    //this.valueCalculator.contracts.sort((a,b) => (a.netSalary < b.netSalary) ? 1 : -1);
     this.fadeOutSaveMessage();
     
   }
