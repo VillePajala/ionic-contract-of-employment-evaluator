@@ -43,7 +43,7 @@ Available as an Android app in Play store: https://play.google.com/store/apps/de
 
 ## Screenshots
 
-![](src/assets/img/screenshot1.jng)
-![](src/assets/img/screenshot2.jng)
-![](src/assets/img/screenshot3.jng)
+![](src/assets/img/screenshot1.jpg)
+![](src/assets/img/screenshot2.jpg)
+![](src/assets/img/screenshot3.jpg)
 
