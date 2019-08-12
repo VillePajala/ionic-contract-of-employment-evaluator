@@ -1,60 +1,108 @@
 <ion-header>
   <ion-toolbar class="toolbarColor">
-    <ion-title text-center class="titleText">
-      Nettopalkkalaskuri
+    <ion-buttons *ngIf="languageSelector.language == 'fi'" padding slot="start">
+      <ion-button size="small" color="dark" shape="round" (click)="languageSelector.changeToEnglish()">{{ languageSelector.languageOptionToShow }}</ion-button>
+    </ion-buttons>
+    <ion-buttons *ngIf="languageSelector.language == 'en'" padding slot="start">
+      <ion-button size="small" color="dark" shape="round" (click)="languageSelector.changeToFinnish()">{{ languageSelector.languageOptionToShow }}</ion-button>
+    </ion-buttons>
+    <ion-title *ngIf="languageSelector.language == 'fi'" text-center class="titleText">
+      Nettolaskuri
     </ion-title>
+    <ion-title *ngIf="languageSelector.language == 'en'" text-center class="titleText">
+      Net Calculator
+    </ion-title>
+    <ion-buttons *ngIf="languageSelector.language == 'fi'" padding slot="end">
+      <ion-button size="small" color="medium" shape="round" (click)="languageSelector.changeToEnglish()">{{ languageSelector.languageOptionToShow }}</ion-button>
+    </ion-buttons>
+    <ion-buttons *ngIf="languageSelector.language == 'en'" padding slot="end">
+      <ion-button size="small" color="medium" shape="round" (click)="languageSelector.changeToFinnish()">{{ languageSelector.languageOptionToShow }}</ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="appBackground">
+  <ion-card class="mainCard">
 
-    <ion-card class="mainCard">
+    <ion-card-header *ngIf="languageSelector.language == 'fi'">
+      <ion-card-title class="cardHeader" text-center>Syötä bruttopalkka:</ion-card-title><br>
+    </ion-card-header>
+    <ion-card-header *ngIf="languageSelector.language == 'en'">
+      <ion-card-title class="cardHeader" text-center>Enter Gross Salary:</ion-card-title><br>
+    </ion-card-header>
 
-      <ion-card-header>
-        <ion-card-title class="cardHeader" text-center>Syötä bruttopalkka:</ion-card-title><br>
-      </ion-card-header>
-      <ion-card-content>
-        <ion-item>
-          <ion-label position="stacked">Bruttopalkka (€/kk)</ion-label>
-          <ion-input [(ngModel)]="contractSalary" type="tel"></ion-input>
-        </ion-item>
-        <ion-item *ngIf="AdditionalSettings">
-          <ion-label position="stacked">Vuosibonus (€)</ion-label>
-          <ion-input [(ngModel)]="yearlyBonus" type="tel"></ion-input>
-        </ion-item><br>
-        <div no-padding text-center>
-          <ion-button shape="round" (click)="getPercentEstimate()">Laske Netto</ion-button><br>
-        </div>
-        <div no-padding text-center>
-          <ion-button size="small" color="medium" shape="round" (click)="showAdditionalSettings()">{{ AdditionalSettingstext }} Lisävalinnat</ion-button>
-        </div>
-      </ion-card-content>
+    <ion-card-content>
+      <ion-item *ngIf="languageSelector.language == 'fi'">
+        <ion-label position="stacked">Bruttopalkka (€/kk)</ion-label>
+        <ion-input [(ngModel)]="contractSalary" type="tel"></ion-input>
+      </ion-item>
+      <ion-item *ngIf="languageSelector.language == 'en'">
+        <ion-label position="stacked">Gross salary (€/mo)</ion-label>
+        <ion-input [(ngModel)]="contractSalary" type="tel"></ion-input>
+      </ion-item>
 
-      <ion-card class="mainCard2" padding  *ngIf="valueCalculator.taxPercentEstimate">
-        <ion-card-header no-padding>
-          <h3 text-center id="highlightText2"><b>Nettopalkka: {{ totalSum * (1 - (valueCalculator.taxPercentEstimate / 100)) | number:'1.0-0' }} €/kk </b></h3>
-          <ion-card-subtitle text-center>Arvioitu veroprosentti: {{ valueCalculator.taxPercentEstimate | number:'1.0-0' }} %</ion-card-subtitle>
-          <ion-card-subtitle text-center>Maksetut verot : {{ totalSum * (valueCalculator.taxPercentEstimate / 100) | number:'1.0-0' }} €/kk</ion-card-subtitle>
-        </ion-card-header>
-        <ion-card-content no-padding text-center>
-            <ion-button padding (click)="saveDataAs()">Tallenna</ion-button><br><br>
-        </ion-card-content>
-      </ion-card>
-
-      <ion-card padding text-center class="mainCard2" *ngIf="errorMessage">
-        <ion-card-header padding>
-          <ion-card-subtitle> {{ errorMessage }}</ion-card-subtitle>    
-        </ion-card-header>
-      </ion-card>
-
-      <ion-card padding class="mainCard2" *ngIf="dataSaved">
-        <ion-card-header padding>
-          <h3 text-center id="highlightText2"><b>Tiedot tallennettu!</b><br></h3>
-        </ion-card-header>
-      </ion-card>
-
-      <br>
+      <ion-item *ngIf="AdditionalSettings && languageSelector.language == 'fi'">
+        <ion-label position="stacked">Bonus (€/vuodessa)</ion-label>
+        <ion-input [(ngModel)]="yearlyBonus" type="tel"></ion-input>
+      </ion-item>
+      <ion-item *ngIf="AdditionalSettings && languageSelector.language == 'en'">
+        <ion-label position="stacked">Bonus (€/year)</ion-label>
+        <ion-input [(ngModel)]="yearlyBonus" type="tel"></ion-input>
+      </ion-item>
       
+      <br>
+
+      <div *ngIf="languageSelector.language == 'fi'" no-padding text-center>
+        <ion-button shape="round" (click)="getPercentEstimate()">Laske Netto</ion-button><br>
+      </div>
+      <div *ngIf="languageSelector.language == 'en'" no-padding text-center>
+        <ion-button shape="round" (click)="getPercentEstimate()">Calculate Net</ion-button><br>
+      </div>
+
+      <div *ngIf="languageSelector.language == 'fi'" no-padding text-center>
+        <ion-button size="small" color="medium" shape="round" (click)="showAdditionalSettings()">Bonukset</ion-button>
+      </div>
+      <div *ngIf="languageSelector.language == 'en'" no-padding text-center>
+        <ion-button size="small" color="medium" shape="round" (click)="showAdditionalSettings()">Bonuses</ion-button>
+      </div>
+    </ion-card-content>
+
+    <ion-card *ngIf="languageSelector.language == 'fi' && valueCalculator.taxPercentEstimate" class="mainCard2" padding>
+      <ion-card-header no-padding>
+        <h3 text-center id="highlightText2"><b>Nettopalkka: {{ totalSum * (1 - (valueCalculator.taxPercentEstimate / 100)) | number:'1.0-0' }} €/kk </b></h3>
+        <ion-card-subtitle text-center>Arvioitu veroprosentti: {{ valueCalculator.taxPercentEstimate | number:'1.0-0' }} %</ion-card-subtitle>
+        <ion-card-subtitle text-center>Maksetut verot : {{ totalSum * (valueCalculator.taxPercentEstimate / 100) | number:'1.0-0' }} €/kk</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content no-padding text-center>
+          <ion-button padding (click)="saveDataAs()">Tallenna</ion-button><br><br>
+      </ion-card-content>
+    </ion-card>
+    <ion-card *ngIf="languageSelector.language == 'en' && valueCalculator.taxPercentEstimate" class="mainCard2" padding>
+      <ion-card-header no-padding>
+        <h3 text-center id="highlightText2"><b>Net salary: {{ totalSum * (1 - (valueCalculator.taxPercentEstimate / 100)) | number:'1.0-0' }} €/mo </b></h3>
+        <ion-card-subtitle text-center>Estimated Tax percentage: {{ valueCalculator.taxPercentEstimate | number:'1.0-0' }} %</ion-card-subtitle>
+        <ion-card-subtitle text-center>Taxes Paid : {{ totalSum * (valueCalculator.taxPercentEstimate / 100) | number:'1.0-0' }} €/mo</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content no-padding text-center>
+          <ion-button padding (click)="saveDataAsInEnglish()">Save</ion-button><br><br>
+      </ion-card-content>
     </ion-card>
 
+    <ion-card padding text-center class="mainCard2" *ngIf="errorMessage">
+      <ion-card-header padding>
+        <ion-card-subtitle> {{ errorMessage }}</ion-card-subtitle>    
+      </ion-card-header>
+    </ion-card>
+
+    <ion-card padding class="mainCard2" *ngIf="dataSaved">
+      <ion-card-header *ngIf="languageSelector.language == 'fi'" padding>
+        <h3 text-center id="highlightText2"><b>Tiedot tallennettu!</b><br></h3>
+      </ion-card-header>
+      <ion-card-header *ngIf="languageSelector.language == 'en'" padding>
+        <h3 text-center id="highlightText2"><b>Data saved!</b><br></h3>
+      </ion-card-header>
+    </ion-card>
+
+    <br>
+  </ion-card>
 </ion-content>

@@ -1,3 +1,4 @@
+import { LanguagesService } from './../languages.service';
 import { DatabaseService } from './../database.service';
 import { AlertController, Platform } from '@ionic/angular';
 import { ValuecalculatorService } from './../valuecalculator.service';
@@ -17,7 +18,8 @@ contractUnemploymentInsurance : number = 0.015
 constructor(public valueCalculator : ValuecalculatorService,
             private dialogueCtrl : AlertController,
             public database : DatabaseService,
-            private platform : Platform) {
+            private platform : Platform,
+            public languageSelector : LanguagesService) {
 
   }
 
@@ -44,7 +46,28 @@ constructor(public valueCalculator : ValuecalculatorService,
     await alertWindow.present();
   }
 
-  
+  confirmDeleteInEnglish = async (id) : Promise<any> => {
+    let identification = id;
+    const alertWindow = await this.dialogueCtrl.create({
+                                                    header: "Are you sure you want to delete this item?",
+                                                    inputs : [  
+                                                              ],
+                                                    buttons : [
+                                                                {
+                                                                  text : "Delete",
+                                                                  handler : (data : any) => {
+                                                                            this.database.deleteContract(identification);
+                                                                          }
+                                                                },
+                                                                {
+                                                                  text : "Cancel",
+                                                                  role : "cancel",
+                                                                  cssClass : "secondary"
+                                                                }
+                                                              ]
+                                                      });
+    await alertWindow.present();
+  }
 
 }
 

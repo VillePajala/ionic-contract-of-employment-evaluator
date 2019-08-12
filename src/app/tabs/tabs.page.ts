@@ -1,3 +1,4 @@
+import { LanguagesService } from './../languages.service';
 import { Platform } from '@ionic/angular';
 import { Component } from '@angular/core';
 
@@ -9,7 +10,8 @@ import { Component } from '@angular/core';
 })
 export class TabsPage {
 
-  constructor (private platform : Platform) {
+  constructor (private platform : Platform,
+               public languagesService : LanguagesService ) {
 
   }
   

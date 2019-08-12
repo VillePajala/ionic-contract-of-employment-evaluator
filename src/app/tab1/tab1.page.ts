@@ -1,3 +1,4 @@
+import { LanguagesService } from './../languages.service';
 import { DatabaseService } from './../database.service';
 import { ValuecalculatorService } from './../valuecalculator.service';
 import { Component } from '@angular/core';
@@ -19,12 +20,13 @@ export class Tab1Page {
   yearlyBonus : number = 0;
   yearlyBonusMonthly : number = 0;
   dataSaved : boolean = false;
-  AdditionalSettingstext : string = "Näytä";
+  
 
 
   constructor(public valueCalculator : ValuecalculatorService, 
               private dialogueCtrl : AlertController,
-              public database : DatabaseService) {
+              public database : DatabaseService,
+              public languageSelector : LanguagesService) {
 
   }
 
@@ -59,10 +61,8 @@ export class Tab1Page {
   showAdditionalSettings = () : void => {
     if (this.AdditionalSettings == false) {
       this.AdditionalSettings = true;
-      this.AdditionalSettingstext = "Piilota";
     } else {
       this.AdditionalSettings = false;
-      this.AdditionalSettingstext = "Näytä";
     }
   }
 
@@ -86,6 +86,34 @@ export class Tab1Page {
                                                                 },
                                                                 {
                                                                   text : "Peruuta",
+                                                                  role : "cancel",
+                                                                  cssClass : "secondary"
+                                                                }
+                                                              ]
+                                                      });
+    await alertWindow.present();
+  }
+
+  saveDataAsInEnglish = async () : Promise<any> => {
+    const alertWindow = await this.dialogueCtrl.create({
+                                                    header: "How would you like to name the calculation?",
+                                                    inputs : [  
+                                                                {
+                                                                  name : "contractName",
+                                                                  type : "text",
+                                                                  placeholder : "i.e. Company name"
+                                                                }
+                                                              ],
+                                                    buttons : [
+                                                                {
+                                                                  text : "Save",
+                                                                  handler : (data : any) => {
+                                                                            this.contractName = data.contractName;
+                                                                            this.saveContractData();
+                                                                          }
+                                                                },
+                                                                {
+                                                                  text : "Cancel",
                                                                   role : "cancel",
                                                                   cssClass : "secondary"
                                                                 }

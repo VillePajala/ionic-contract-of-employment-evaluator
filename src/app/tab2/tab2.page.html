@@ -1,17 +1,34 @@
 <ion-header>
   <ion-toolbar class="toolbarColor">
-    <ion-title text-center class="titleText">
+    <ion-buttons *ngIf="languageSelector.language == 'fi'" padding slot="start">
+      <ion-button size="small" color="dark" shape="round" (click)="languageSelector.changeToEnglish()">{{ languageSelector.languageOptionToShow }}</ion-button>
+    </ion-buttons>
+    <ion-buttons *ngIf="languageSelector.language == 'en'" padding slot="start">
+      <ion-button size="small" color="dark" shape="round" (click)="languageSelector.changeToFinnish()">{{ languageSelector.languageOptionToShow }}</ion-button>
+    </ion-buttons>
+    <ion-title *ngIf="languageSelector.language == 'fi'" text-center class="titleText">
       Tallennetut
     </ion-title>
+    <ion-title *ngIf="languageSelector.language == 'en'" text-center class="titleText">
+      Saved items
+    </ion-title>
+    <ion-buttons *ngIf="languageSelector.language == 'fi'" padding slot="end">
+      <ion-button size="small" color="medium" shape="round" (click)="languageSelector.changeToEnglish()">{{ languageSelector.languageOptionToShow }}</ion-button>
+    </ion-buttons>
+    <ion-buttons *ngIf="languageSelector.language == 'en'" padding slot="end">
+      <ion-button size="small" color="medium" shape="round" (click)="languageSelector.changeToFinnish()">{{ languageSelector.languageOptionToShow }}</ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="appBackground">
-  
   <div>
     <ion-card class="mainCard2" *ngIf="database.contracts.length == 0">  
-      <ion-card-header padding>
-        <ion-card-subtitle text-center>Sinulla ei ole vielä yhtään sopimusta</ion-card-subtitle>
+      <ion-card-header *ngIf="languageSelector.language == 'fi'"  padding>
+        <ion-card-subtitle text-center>Ei tallennettuja tietoja</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-header *ngIf="languageSelector.language == 'en'"  padding>
+        <ion-card-subtitle text-center>No saved items</ion-card-subtitle>
       </ion-card-header>
     </ion-card>
   </div>
@@ -23,7 +40,7 @@
         <div *ngFor="let contract of database.contracts">
           <ion-card class="mainCard2">
             <div class="centerObject">
-              <ion-card-header color="info" padding>
+              <ion-card-header *ngIf="languageSelector.language == 'fi'" color="info" padding>
                 <ion-card-subtitle id="highlightText2"><b>{{ contract.contractName }} </b></ion-card-subtitle>
                 <ion-card-subtitle>Bruttopalkka: {{ contract.contractSalary | number:'1.0-0' }} €/kk</ion-card-subtitle>
                 <ion-card-subtitle>Vuosibonus: {{ contract.yearlyBonus | number:'1.0-0' }} €/vuosi</ion-card-subtitle>
@@ -32,6 +49,17 @@
                 <ion-card-subtitle id="highlightText"><b>Nettopalkka: {{ contract.netSalary | number:'1.0-0' }} €/kk </b></ion-card-subtitle>
                 <div class="centerObject">
                   <ion-button (click)="confirmDelete(contract.timestamp)" size="small" shape="round">Poista</ion-button>
+                </div>
+              </ion-card-header>
+              <ion-card-header *ngIf="languageSelector.language == 'en'" color="info" padding>
+                <ion-card-subtitle id="highlightText2"><b>{{ contract.contractName }} </b></ion-card-subtitle>
+                <ion-card-subtitle>Gross salary: {{ contract.contractSalary | number:'1.0-0' }} €/mo</ion-card-subtitle>
+                <ion-card-subtitle>Yearly bonus: {{ contract.yearlyBonus | number:'1.0-0' }} €/year</ion-card-subtitle>
+                <ion-card-subtitle>Estimated tax percentage: {{ contract.contractTax | number:'1.0-0' }} %</ion-card-subtitle>
+                <ion-card-subtitle>Taxes paid : {{ contract.taxPaid | number:'1.0-0' }} €/mo</ion-card-subtitle>
+                <ion-card-subtitle id="highlightText"><b>Net salary: {{ contract.netSalary | number:'1.0-0' }} €/mo </b></ion-card-subtitle>
+                <div class="centerObject">
+                  <ion-button (click)="confirmDeleteInEnglish(contract.timestamp)" size="small" shape="round">Delete</ion-button>
                 </div>
               </ion-card-header>
             </div>
