@@ -7,10 +7,10 @@
       <ion-button size="small" color="dark" shape="round" (click)="languageSelector.changeToFinnish()">{{ languageSelector.languageOptionToShow }}</ion-button>
     </ion-buttons>
     <ion-title *ngIf="languageSelector.language == 'fi'" text-center class="titleText">
-      Nettolaskuri
+      Nettopalkka
     </ion-title>
     <ion-title *ngIf="languageSelector.language == 'en'" text-center class="titleText">
-      Net Calculator
+      Netsalary
     </ion-title>
     <ion-buttons *ngIf="languageSelector.language == 'fi'" padding slot="end">
       <ion-button size="small" color="medium" shape="round" (click)="languageSelector.changeToEnglish()">{{ languageSelector.languageOptionToShow }}</ion-button>

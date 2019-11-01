@@ -53,11 +53,11 @@ export class Tab1Page {
     this.commaToDot = this.commaToDot.replace(/\./g, '').replace(',', '.');
     this.contractSalary = Number(this.commaToDot)
     
-    if(isNaN(this.contractSalary)){
+    if(isNaN(this.contractSalary) || this.contractSalary > 1000000000){
       if (this.languageSelector.language == 'fi') {
-        this.errorMessage = "Tarkista summa. Käytä vain numeroita.";
+        this.errorMessage = "Tarkista summa. Syötteen täytyy olla numero, joka on alle yhden miljardin";
       } else {
-        this.errorMessage = "Check value. Use only numbers";
+        this.errorMessage = "Check value. Input must be a number and less than 1 billion";
       }
       this.valueCalculator.taxPercentEstimate = null;
     } else {
@@ -70,6 +70,7 @@ export class Tab1Page {
       } else {
         if (this.languageSelector.language == 'fi') {
           this.errorMessage = "Tarkista summa. Käytä vain numeroita.";
+        } else {
           this.errorMessage = "Check value. Use only numbers";
         }
         this.valueCalculator.taxPercentEstimate = null;
