@@ -60,5 +60,11 @@
   "validation": {
     "invalidNumber": "Tarkista summa. Käytä vain numeroita.",
     "tooLarge": "Tarkista summa. Syötteen täytyy olla numero, joka on alle yhden miljardin."
+  },
+  "pwa": {
+    "installTitle": "Asenna sovellus",
+    "installMessage": "Asenna Nettopalkkalaskuri laitteellesi nopeaa käyttöä varten.",
+    "install": "Asenna",
+    "later": "Myöhemmin"
   }
 }

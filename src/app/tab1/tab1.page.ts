@@ -29,6 +29,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { TaxCalculatorService } from '../core/services/tax-calculator.service';
 import { DatabaseService } from '../core/services/database.service';
 import { LanguageService } from '../core/services/language.service';
+import { PwaInstallService } from '../core/services/pwa-install.service';
 import {
   MUNICIPALITIES_2025,
   DEFAULT_MUNICIPAL_TAX_RATE,
@@ -74,6 +75,7 @@ export class Tab1Page {
   private translate = inject(TranslateService);
 
   readonly language = inject(LanguageService);
+  readonly pwaInstall = inject(PwaInstallService);
 
   // Municipality list for dropdown
   readonly municipalities = MUNICIPALITIES_2025;

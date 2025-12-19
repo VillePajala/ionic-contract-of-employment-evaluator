@@ -60,5 +60,11 @@
   "validation": {
     "invalidNumber": "Check value. Use only numbers.",
     "tooLarge": "Check value. Input must be a number less than 1 billion."
+  },
+  "pwa": {
+    "installTitle": "Install App",
+    "installMessage": "Install Net Salary Calculator on your device for quick access.",
+    "install": "Install",
+    "later": "Later"
   }
 }

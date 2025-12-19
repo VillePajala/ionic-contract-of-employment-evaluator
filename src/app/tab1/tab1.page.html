@@ -10,6 +10,28 @@
 </ion-header>
 
 <ion-content>
+  <!-- PWA Install Prompt -->
+  @if (pwaInstall.canInstall()) {
+    <ion-card class="install-card">
+      <ion-card-content>
+        <div class="install-content">
+          <div class="install-text">
+            <h3>{{ 'pwa.installTitle' | translate }}</h3>
+            <p>{{ 'pwa.installMessage' | translate }}</p>
+          </div>
+          <div class="install-actions">
+            <ion-button size="small" (click)="pwaInstall.install()">
+              {{ 'pwa.install' | translate }}
+            </ion-button>
+            <ion-button size="small" fill="clear" (click)="pwaInstall.dismiss()">
+              {{ 'pwa.later' | translate }}
+            </ion-button>
+          </div>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  }
+
   <!-- Main Input Card -->
   <ion-card class="mainCard">
     <ion-card-header>
