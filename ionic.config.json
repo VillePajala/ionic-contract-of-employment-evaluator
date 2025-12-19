@@ -1,7 +1,7 @@
 {
-  "name": "ionic-contract-of-employment-evaluator",
+  "name": "nettopalkkalaskuri-v2",
   "integrations": {
-    "cordova": {}
+    "capacitor": {}
   },
-  "type": "angular"
+  "type": "angular-standalone"
 }

@@ -1,30 +1,28 @@
-import { LanguagesService } from './../languages.service';
-import { Platform } from '@ionic/angular';
-import { Component } from '@angular/core';
-
+import { Component, EnvironmentInjector, inject, computed, OnInit } from '@angular/core';
+import { IonTabs, IonTabBar, IonTabButton, IonIcon, IonLabel, IonBadge } from '@ionic/angular/standalone';
+import { TranslateModule } from '@ngx-translate/core';
+import { addIcons } from 'ionicons';
+import { calculator, bookmark, informationCircle } from 'ionicons/icons';
+import { DatabaseService } from '../core/services/database.service';
 
 @Component({
   selector: 'app-tabs',
   templateUrl: 'tabs.page.html',
-  styleUrls: ['tabs.page.scss']
+  styleUrls: ['tabs.page.scss'],
+  standalone: true,
+  imports: [IonTabs, IonTabBar, IonTabButton, IonIcon, IonLabel, IonBadge, TranslateModule],
 })
-export class TabsPage {
+export class TabsPage implements OnInit {
+  public environmentInjector = inject(EnvironmentInjector);
+  private db = inject(DatabaseService);
 
-  constructor (private platform : Platform,
-               public languagesService : LanguagesService ) {
+  readonly savedCount = computed(() => this.db.calculations().length);
 
-  }
-  
-
-  closeApp = () : void => {
-    
-    this.platform.backButton.subscribe(() => {
-      navigator['app'].exitApp();
-    })
+  constructor() {
+    addIcons({ calculator, bookmark, informationCircle });
   }
 
+  async ngOnInit(): Promise<void> {
+    await this.db.initialize();
+  }
 }
-
-
-
-

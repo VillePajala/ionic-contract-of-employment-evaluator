@@ -1,74 +1,83 @@
-import { LanguagesService } from './../languages.service';
-import { DatabaseService } from './../database.service';
-import { AlertController, Platform } from '@ionic/angular';
-import { ValuecalculatorService } from './../valuecalculator.service';
-import { Component } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
+import { DecimalPipe, DatePipe } from '@angular/common';
+import {
+  IonHeader,
+  IonToolbar,
+  IonTitle,
+  IonContent,
+  IonCard,
+  IonCardHeader,
+  IonCardTitle,
+  IonCardSubtitle,
+  IonCardContent,
+  IonButton,
+  IonButtons,
+  IonIcon,
+  IonChip,
+  AlertController,
+} from '@ionic/angular/standalone';
+import { addIcons } from 'ionicons';
+import { bookmarkOutline } from 'ionicons/icons';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { DatabaseService } from '../core/services/database.service';
+import { LanguageService } from '../core/services/language.service';
+import { SavedCalculation } from '../core/models/calculation.interface';
+
+addIcons({ bookmarkOutline });
 
 @Component({
   selector: 'app-tab2',
   templateUrl: 'tab2.page.html',
-  styleUrls: ['tab2.page.scss']
+  styleUrls: ['tab2.page.scss'],
+  standalone: true,
+  imports: [
+    DecimalPipe,
+    DatePipe,
+    TranslateModule,
+    IonHeader,
+    IonToolbar,
+    IonTitle,
+    IonContent,
+    IonCard,
+    IonCardHeader,
+    IonCardTitle,
+    IonCardSubtitle,
+    IonCardContent,
+    IonButton,
+    IonButtons,
+    IonIcon,
+    IonChip,
+  ],
 })
-export class Tab2Page {
+export class Tab2Page implements OnInit {
+  readonly db = inject(DatabaseService);
+  readonly language = inject(LanguageService);
+  private alertCtrl = inject(AlertController);
+  private translate = inject(TranslateService);
 
-contractPension1 : number = 0.0675;
-contractPension2 : number = 0.0825;
-contractUnemploymentInsurance : number = 0.015 
-
-constructor(public valueCalculator : ValuecalculatorService,
-            private dialogueCtrl : AlertController,
-            public database : DatabaseService,
-            private platform : Platform,
-            public languageSelector : LanguagesService) {
-
+  async ngOnInit(): Promise<void> {
+    await this.db.initialize();
   }
 
-  confirmDelete = async (id) : Promise<any> => {
-    let identification = id;
-    const alertWindow = await this.dialogueCtrl.create({
-                                                    header: "Haluatko varmasti poistaa tiedon?",
-                                                    inputs : [  
-                                                              ],
-                                                    buttons : [
-                                                                {
-                                                                  text : "Poista",
-                                                                  handler : (data : any) => {
-                                                                            this.database.deleteContract(identification);
-                                                                          }
-                                                                },
-                                                                {
-                                                                  text : "Peruuta",
-                                                                  role : "cancel",
-                                                                  cssClass : "secondary"
-                                                                }
-                                                              ]
-                                                      });
-    await alertWindow.present();
+  /**
+   * Shows confirmation dialog and deletes the calculation if confirmed.
+   */
+  async confirmDelete(calculation: SavedCalculation): Promise<void> {
+    const alert = await this.alertCtrl.create({
+      header: this.translate.instant('saved.confirmDelete'),
+      buttons: [
+        { text: this.translate.instant('common.cancel'), role: 'cancel' },
+        {
+          text: this.translate.instant('saved.delete'),
+          role: 'destructive',
+          handler: () => {
+            if (calculation.id !== undefined) {
+              this.db.delete(calculation.id);
+            }
+          },
+        },
+      ],
+    });
+    await alert.present();
   }
-
-  confirmDeleteInEnglish = async (id) : Promise<any> => {
-    let identification = id;
-    const alertWindow = await this.dialogueCtrl.create({
-                                                    header: "Are you sure you want to delete this item?",
-                                                    inputs : [  
-                                                              ],
-                                                    buttons : [
-                                                                {
-                                                                  text : "Delete",
-                                                                  handler : (data : any) => {
-                                                                            this.database.deleteContract(identification);
-                                                                          }
-                                                                },
-                                                                {
-                                                                  text : "Cancel",
-                                                                  role : "cancel",
-                                                                  cssClass : "secondary"
-                                                                }
-                                                              ]
-                                                      });
-    await alertWindow.present();
-  }
-
 }
-
-

@@ -1,177 +1,263 @@
-import { LanguagesService } from './../languages.service';
-import { DatabaseService } from './../database.service';
-import { ValuecalculatorService } from './../valuecalculator.service';
-import { Component } from '@angular/core';
-import { AlertController } from '@ionic/angular';
+import { Component, inject, signal, computed } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { DecimalPipe } from '@angular/common';
+import {
+  IonHeader,
+  IonToolbar,
+  IonTitle,
+  IonContent,
+  IonCard,
+  IonCardHeader,
+  IonCardTitle,
+  IonCardSubtitle,
+  IonCardContent,
+  IonItem,
+  IonLabel,
+  IonInput,
+  IonButton,
+  IonButtons,
+  IonText,
+  IonSelect,
+  IonSelectOption,
+  IonToggle,
+  IonList,
+  IonSegment,
+  IonSegmentButton,
+  AlertController,
+} from '@ionic/angular/standalone';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TaxCalculatorService } from '../core/services/tax-calculator.service';
+import { DatabaseService } from '../core/services/database.service';
+import { LanguageService } from '../core/services/language.service';
+import {
+  MUNICIPALITIES_2025,
+  DEFAULT_MUNICIPAL_TAX_RATE,
+  AgeRange,
+} from '../core/data/tax-config';
 
 @Component({
   selector: 'app-tab1',
   templateUrl: 'tab1.page.html',
-  styleUrls: ['tab1.page.scss']
+  styleUrls: ['tab1.page.scss'],
+  standalone: true,
+  imports: [
+    FormsModule,
+    DecimalPipe,
+    TranslateModule,
+    IonHeader,
+    IonToolbar,
+    IonTitle,
+    IonContent,
+    IonCard,
+    IonCardHeader,
+    IonCardTitle,
+    IonCardSubtitle,
+    IonCardContent,
+    IonItem,
+    IonLabel,
+    IonInput,
+    IonButton,
+    IonButtons,
+    IonText,
+    IonSelect,
+    IonSelectOption,
+    IonToggle,
+    IonList,
+    IonSegment,
+    IonSegmentButton,
+  ],
 })
 export class Tab1Page {
+  private taxCalculator = inject(TaxCalculatorService);
+  private db = inject(DatabaseService);
+  private alertCtrl = inject(AlertController);
+  private translate = inject(TranslateService);
 
-  contractName : string;
-  contractSalary : number;
-  totalSum : number;
-  contractTax : number;
-  errorMessage : string;
-  AdditionalSettings : boolean = false;
-  yearlyBonus : number = 0;
-  yearlyBonusMonthly : number = 0;
-  dataSaved : boolean = false;
-  commaToDot : string = "";
-  
+  readonly language = inject(LanguageService);
 
+  // Municipality list for dropdown
+  readonly municipalities = MUNICIPALITIES_2025;
+  readonly defaultMunicipalRate = DEFAULT_MUNICIPAL_TAX_RATE;
 
-  constructor(public valueCalculator : ValuecalculatorService, 
-              private dialogueCtrl : AlertController,
-              public database : DatabaseService,
-              public languageSelector : LanguagesService) {
+  // Form inputs as signals
+  grossSalary = signal<string>('');
+  yearlyBonus = signal<string>('');
+  showBonusInput = signal(false);
 
-  }
+  // User options signals
+  selectedAgeRange = signal<AgeRange>('17-52');
+  selectedMunicipality = signal<string>('Helsinki');
+  customMunicipalRate = signal<string>('');
+  useCustomRate = signal(false);
+  isChurchMember = signal(false);
 
-  checkInput = () : void => {
-    this.commaToDot = this.contractSalary.toString();
-    this.commaToDot = this.commaToDot.replace(/\./g, '').replace(',', '.');
-    this.contractSalary = Number(this.commaToDot)
-
-    if(isNaN(this.contractSalary)){
-      if (this.languageSelector.language == 'fi') {
-        this.errorMessage = "Tarkista summa. Käytä vain numeroita.";
-      } else {
-        this.errorMessage = "Check value. Use only numbers";
-      }
-      
-      this.valueCalculator.taxPercentEstimate = null;
-    } else {}
-  }
-
-
-  getPercentEstimate = () : void => {
-    this.commaToDot = this.contractSalary.toString();
-    this.commaToDot = this.commaToDot.replace(/\./g, '').replace(',', '.');
-    this.contractSalary = Number(this.commaToDot)
-    
-    if(isNaN(this.contractSalary) || this.contractSalary > 1000000000){
-      if (this.languageSelector.language == 'fi') {
-        this.errorMessage = "Tarkista summa. Syötteen täytyy olla numero, joka on alle yhden miljardin";
-      } else {
-        this.errorMessage = "Check value. Input must be a number and less than 1 billion";
-      }
-      this.valueCalculator.taxPercentEstimate = null;
-    } else {
-      if (this.contractSalary) {
-        this.yearlyBonusMonthly = Number(this.yearlyBonus) / 12;
-        this.totalSum = Number(this.contractSalary) + Number(this.yearlyBonusMonthly);
-        this.valueCalculator.getPercentEstimate(this.totalSum);
-        this.dataSaved = false;
-        this.errorMessage = null;
-      } else {
-        if (this.languageSelector.language == 'fi') {
-          this.errorMessage = "Tarkista summa. Käytä vain numeroita.";
-        } else {
-          this.errorMessage = "Check value. Use only numbers";
-        }
-        this.valueCalculator.taxPercentEstimate = null;
-      }
+  // Computed municipal rate based on selection
+  readonly effectiveMunicipalRate = computed(() => {
+    if (this.useCustomRate()) {
+      const rate = this.parseNumber(this.customMunicipalRate());
+      return rate !== null ? rate : this.defaultMunicipalRate;
     }
+    const municipality = this.municipalities.find(
+      (m) => m.name === this.selectedMunicipality()
+    );
+    return municipality?.rate ?? this.defaultMunicipalRate;
+  });
+
+  // UI state
+  errorMessage = signal<string | null>(null);
+  showSavedMessage = signal(false);
+  showBreakdown = signal(false);
+
+  // Computed result from tax calculator service
+  readonly result = computed(() => this.taxCalculator.result());
+  readonly userOptions = computed(() => this.taxCalculator.userOptions());
+
+  /**
+   * Updates user options in the calculator service.
+   */
+  updateUserOptions(): void {
+    this.taxCalculator.updateUserOptions({
+      ageRange: this.selectedAgeRange(),
+      municipalityRate: this.effectiveMunicipalRate(),
+      churchMember: this.isChurchMember(),
+    });
   }
 
+  /**
+   * Called when age range changes.
+   */
+  onAgeRangeChange(event: CustomEvent): void {
+    this.selectedAgeRange.set(event.detail.value as AgeRange);
+    this.updateUserOptions();
+  }
 
-  showAdditionalSettings = () : void => {
-    if (this.AdditionalSettings == false) {
-      this.AdditionalSettings = true;
+  /**
+   * Called when municipality selection changes.
+   */
+  onMunicipalityChange(event: CustomEvent): void {
+    const value = event.detail.value;
+    if (value === 'custom') {
+      this.useCustomRate.set(true);
     } else {
-      this.AdditionalSettings = false;
+      this.useCustomRate.set(false);
+      this.selectedMunicipality.set(value);
     }
+    this.updateUserOptions();
   }
 
-  saveDataAs = async () : Promise<any> => {
-    const alertWindow = await this.dialogueCtrl.create({
-                                                    header: "Millä nimellä summa tallennetaan?",
-                                                    inputs : [  
-                                                                {
-                                                                  name : "contractName",
-                                                                  type : "text",
-                                                                  placeholder : "esim. yrityksen nimi"
-                                                                }
-                                                              ],
-                                                    buttons : [
-                                                                {
-                                                                  text : "Tallenna",
-                                                                  handler : (data : any) => {
-                                                                            this.contractName = data.contractName;
-                                                                            this.saveContractData();
-                                                                          }
-                                                                },
-                                                                {
-                                                                  text : "Peruuta",
-                                                                  role : "cancel",
-                                                                  cssClass : "secondary"
-                                                                }
-                                                              ]
-                                                      });
-    await alertWindow.present();
+  /**
+   * Called when custom municipal rate changes.
+   */
+  onCustomRateChange(): void {
+    this.updateUserOptions();
   }
 
-  saveDataAsInEnglish = async () : Promise<any> => {
-    const alertWindow = await this.dialogueCtrl.create({
-                                                    header: "How would you like to name the calculation?",
-                                                    inputs : [  
-                                                                {
-                                                                  name : "contractName",
-                                                                  type : "text",
-                                                                  placeholder : "i.e. Company name"
-                                                                }
-                                                              ],
-                                                    buttons : [
-                                                                {
-                                                                  text : "Save",
-                                                                  handler : (data : any) => {
-                                                                            this.contractName = data.contractName;
-                                                                            this.saveContractData();
-                                                                          }
-                                                                },
-                                                                {
-                                                                  text : "Cancel",
-                                                                  role : "cancel",
-                                                                  cssClass : "secondary"
-                                                                }
-                                                              ]
-                                                      });
-    await alertWindow.present();
+  /**
+   * Called when church membership toggle changes.
+   */
+  onChurchMemberChange(event: CustomEvent): void {
+    this.isChurchMember.set(event.detail.checked);
+    this.updateUserOptions();
   }
 
+  /**
+   * Calculates net salary from the input values.
+   */
+  calculate(): void {
+    const salary = this.parseNumber(this.grossSalary());
+    const bonus = this.parseNumber(this.yearlyBonus()) ?? 0;
 
-  saveContractData = () : void => {
-    let timestamp = new Date().getTime();
-    let newContract : any = {
-                              "contractName" : this.contractName,
-                              "contractSalary" : this.contractSalary,
-                              "yearlyBonus" : this.yearlyBonus,
-                              "contractTax" : this.valueCalculator.taxPercentEstimate,
-                              "taxPaid" :  this.totalSum * (this.valueCalculator.taxPercentEstimate / 100),
-                              "netSalary" : this.totalSum * (1 - (this.valueCalculator.taxPercentEstimate / 100)),
-                              "timestamp" : timestamp
-                            }
+    // Validate input
+    if (salary === null || salary <= 0) {
+      this.errorMessage.set(this.translate.instant('validation.invalidNumber'));
+      return;
+    }
 
-    this.contractSalary = null;
-    this.contractName = "";
-    this.valueCalculator.taxPercentEstimate = null;
-    this.dataSaved = true;
-    this.yearlyBonus = null;
-    this.database.newContract(newContract);
-    this.fadeOutSaveMessage();
-    
+    if (salary > 1_000_000_000) {
+      this.errorMessage.set(this.translate.instant('validation.tooLarge'));
+      return;
+    }
+
+    this.errorMessage.set(null);
+    this.updateUserOptions();
+    this.taxCalculator.updateSalary(salary, bonus);
   }
 
-  fadeOutSaveMessage = () : void => {
-    setTimeout(() => {
-      this.dataSaved = false;
-    }, 2000);
+  /**
+   * Shows the save dialog and saves the calculation.
+   */
+  async save(): Promise<void> {
+    const result = this.result();
+    if (!result) return;
+
+    const alert = await this.alertCtrl.create({
+      header: this.translate.instant('calculator.saveName'),
+      inputs: [
+        {
+          name: 'name',
+          type: 'text',
+          placeholder: this.translate.instant('calculator.namePlaceholder'),
+        },
+      ],
+      buttons: [
+        { text: this.translate.instant('common.cancel'), role: 'cancel' },
+        {
+          text: this.translate.instant('calculator.save'),
+          handler: async (data) => {
+            await this.db.save({
+              ...result,
+              name: data.name || 'Unnamed',
+              createdAt: new Date(),
+              userOptions: this.taxCalculator.getCurrentUserOptions(),
+            });
+            this.showSavedConfirmation();
+            this.resetForm();
+          },
+        },
+      ],
+    });
+    await alert.present();
   }
-    
+
+  /**
+   * Toggles visibility of the bonus input field.
+   */
+  toggleBonus(): void {
+    this.showBonusInput.update((v) => !v);
+  }
+
+  /**
+   * Toggles visibility of the breakdown section.
+   */
+  toggleBreakdown(): void {
+    this.showBreakdown.update((v) => !v);
+  }
+
+  /**
+   * Parses a string to number, handling Finnish decimal separator (comma).
+   */
+  private parseNumber(value: string): number | null {
+    if (!value) return null;
+    // Handle Finnish decimal separator (comma) and remove spaces
+    const normalized = value.replace(/\s/g, '').replace(',', '.');
+    const num = parseFloat(normalized);
+    return isNaN(num) ? null : num;
+  }
+
+  /**
+   * Resets the form to initial state.
+   */
+  private resetForm(): void {
+    this.grossSalary.set('');
+    this.yearlyBonus.set('');
+    this.taxCalculator.reset();
+  }
+
+  /**
+   * Shows the "Data saved!" confirmation message.
+   */
+  private showSavedConfirmation(): void {
+    this.showSavedMessage.set(true);
+    setTimeout(() => this.showSavedMessage.set(false), 2000);
+  }
 }
-
-

@@ -1,1 +1,22 @@
+/* Tab2 Page Styles - Saved Calculations */
 
+.saved-date {
+  font-size: 0.75rem;
+  opacity: 0.6;
+  font-style: italic;
+}
+
+.breakdown-summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  justify-content: center;
+  margin-bottom: 8px;
+
+  ion-chip {
+    --background: transparent;
+    font-size: 11px;
+    height: auto;
+    padding: 4px 8px;
+  }
+}

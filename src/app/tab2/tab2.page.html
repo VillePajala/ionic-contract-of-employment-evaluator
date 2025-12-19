@@ -1,73 +1,70 @@
 <ion-header>
-  <ion-toolbar class="toolbarColor">
-    <ion-buttons *ngIf="languageSelector.language == 'fi'" padding slot="start">
-      <ion-button size="small" color="dark" shape="round" (click)="languageSelector.changeToEnglish()">{{ languageSelector.languageOptionToShow }}</ion-button>
+  <ion-toolbar class="app-toolbar">
+    <ion-buttons slot="start">
+      <ion-button size="small" color="medium" (click)="language.toggle()">
+        {{ language.getOtherLanguage().toUpperCase() }}
+      </ion-button>
     </ion-buttons>
-    <ion-buttons *ngIf="languageSelector.language == 'en'" padding slot="start">
-      <ion-button size="small" color="dark" shape="round" (click)="languageSelector.changeToFinnish()">{{ languageSelector.languageOptionToShow }}</ion-button>
-    </ion-buttons>
-    <ion-title *ngIf="languageSelector.language == 'fi'" text-center class="titleText">
-      Tallennetut
-    </ion-title>
-    <ion-title *ngIf="languageSelector.language == 'en'" text-center class="titleText">
-      Saved items
-    </ion-title>
-    <ion-buttons *ngIf="languageSelector.language == 'fi'" padding slot="end">
-      <ion-button size="small" color="medium" shape="round" (click)="languageSelector.changeToEnglish()">{{ languageSelector.languageOptionToShow }}</ion-button>
-    </ion-buttons>
-    <ion-buttons *ngIf="languageSelector.language == 'en'" padding slot="end">
-      <ion-button size="small" color="medium" shape="round" (click)="languageSelector.changeToFinnish()">{{ languageSelector.languageOptionToShow }}</ion-button>
-    </ion-buttons>
+    <ion-title>{{ 'saved.title' | translate }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="appBackground">
-  <div>
-    <ion-card class="mainCard2" *ngIf="database.contracts.length == 0">  
-      <ion-card-header *ngIf="languageSelector.language == 'fi'"  padding>
-        <ion-card-subtitle text-center>Ei tallennettuja tietoja</ion-card-subtitle>
-      </ion-card-header>
-      <ion-card-header *ngIf="languageSelector.language == 'en'"  padding>
-        <ion-card-subtitle text-center>No saved items</ion-card-subtitle>
-      </ion-card-header>
+<ion-content>
+  @if (db.calculations().length === 0) {
+    <ion-card class="mainCard2">
+      <ion-card-content class="ion-text-center ion-padding">
+        <ion-icon name="bookmark-outline" style="font-size: 3rem; color: var(--ion-color-medium); opacity: 0.5;"></ion-icon>
+        <p style="color: var(--ion-color-medium); margin-top: 12px;">{{ 'saved.noItems' | translate }}</p>
+      </ion-card-content>
     </ion-card>
-  </div>
-    
-  <ion-grid *ngIf="database.contracts.length > 0">
-    <ion-row>
-      <ion-col>
-
-        <div *ngFor="let contract of database.contracts">
-          <ion-card class="mainCard2">
-            <div class="centerObject">
-              <ion-card-header *ngIf="languageSelector.language == 'fi'" color="info" padding>
-                <ion-card-subtitle id="highlightText2"><b>{{ contract.contractName }} </b></ion-card-subtitle>
-                <ion-card-subtitle>Bruttopalkka: {{ contract.contractSalary | number:'1.0-0' }} €/kk</ion-card-subtitle>
-                <ion-card-subtitle>Vuosibonus: {{ contract.yearlyBonus | number:'1.0-0' }} €/vuosi</ion-card-subtitle>
-                <ion-card-subtitle>Arvioitu veroprosentti: {{ contract.contractTax | number:'1.0-0' }} %</ion-card-subtitle>
-                <ion-card-subtitle>Maksetut verot : {{ contract.taxPaid | number:'1.0-0' }} €/kk</ion-card-subtitle>
-                <ion-card-subtitle id="highlightText"><b>Nettopalkka: {{ contract.netSalary | number:'1.0-0' }} €/kk </b></ion-card-subtitle>
-                <div class="centerObject">
-                  <ion-button (click)="confirmDelete(contract.timestamp)" size="small" shape="round">Poista</ion-button>
-                </div>
-              </ion-card-header>
-              <ion-card-header *ngIf="languageSelector.language == 'en'" color="info" padding>
-                <ion-card-subtitle id="highlightText2"><b>{{ contract.contractName }} </b></ion-card-subtitle>
-                <ion-card-subtitle>Gross salary: {{ contract.contractSalary | number:'1.0-0' }} €/mo</ion-card-subtitle>
-                <ion-card-subtitle>Yearly bonus: {{ contract.yearlyBonus | number:'1.0-0' }} €/year</ion-card-subtitle>
-                <ion-card-subtitle>Estimated tax percentage: {{ contract.contractTax | number:'1.0-0' }} %</ion-card-subtitle>
-                <ion-card-subtitle>Taxes paid : {{ contract.taxPaid | number:'1.0-0' }} €/mo</ion-card-subtitle>
-                <ion-card-subtitle id="highlightText"><b>Net salary: {{ contract.netSalary | number:'1.0-0' }} €/mo </b></ion-card-subtitle>
-                <div class="centerObject">
-                  <ion-button (click)="confirmDeleteInEnglish(contract.timestamp)" size="small" shape="round">Delete</ion-button>
-                </div>
-              </ion-card-header>
+  } @else {
+    @for (calc of db.calculations(); track calc.id) {
+      <ion-card class="mainCard2">
+        <ion-card-header>
+          <ion-card-title>{{ calc.name }}</ion-card-title>
+          <ion-card-subtitle class="saved-date">
+            {{ calc.createdAt | date:'d.M.yyyy HH:mm' }}
+          </ion-card-subtitle>
+          <ion-card-subtitle>
+            {{ 'calculator.grossSalary' | translate }}: {{ calc.grossMonthly | number:'1.0-0' }} {{ 'common.perMonth' | translate }}
+          </ion-card-subtitle>
+          @if (calc.yearlyBonus > 0) {
+            <ion-card-subtitle>
+              {{ 'calculator.yearlyBonus' | translate }}: {{ calc.yearlyBonus | number:'1.0-0' }} {{ 'common.perYear' | translate }}
+            </ion-card-subtitle>
+          }
+          <ion-card-subtitle>
+            {{ 'calculator.estimatedTaxRate' | translate }}: {{ calc.effectiveTaxRate | number:'1.1-1' }}%
+          </ion-card-subtitle>
+          <ion-card-subtitle>
+            {{ 'calculator.totalDeductions' | translate }}: {{ calc.monthlyTaxPaid | number:'1.0-0' }} {{ 'common.perMonth' | translate }}
+          </ion-card-subtitle>
+          <h3 class="ion-text-center" id="highlightText2">
+            {{ 'calculator.netSalary' | translate }}: {{ calc.netMonthlySalary | number:'1.0-0' }} {{ 'common.perMonth' | translate }}
+          </h3>
+        </ion-card-header>
+        <ion-card-content>
+          <!-- Show breakdown if available -->
+          @if (calc.breakdown) {
+            <div class="breakdown-summary">
+              <ion-chip color="primary" outline="true">
+                {{ 'calculator.breakdown.stateTax' | translate }}: {{ calc.breakdown.stateTax | number:'1.0-0' }}€
+              </ion-chip>
+              <ion-chip color="primary" outline="true">
+                {{ 'calculator.breakdown.municipalTax' | translate }}: {{ calc.breakdown.municipalTax | number:'1.0-0' }}€
+              </ion-chip>
+              <ion-chip color="primary" outline="true">
+                {{ 'calculator.breakdown.pension' | translate }}: {{ calc.breakdown.pensionContribution | number:'1.0-0' }}€
+              </ion-chip>
             </div>
-          </ion-card>
-        </div>
-
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-  
+          }
+          <div class="ion-text-center ion-margin-top">
+            <ion-button size="small" fill="outline" color="danger" (click)="confirmDelete(calc)">
+              {{ 'saved.delete' | translate }}
+            </ion-button>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    }
+  }
 </ion-content>

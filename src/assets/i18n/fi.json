@@ -1,0 +1,64 @@
+{
+  "app": {
+    "title": "Nettopalkkalaskuri"
+  },
+  "tabs": {
+    "calculator": "Laskuri",
+    "saved": "Tallennetut",
+    "about": "Tietoja"
+  },
+  "calculator": {
+    "title": "Nettopalkka",
+    "enterGrossSalary": "Syötä bruttopalkka:",
+    "grossSalary": "Bruttopalkka (EUR/kk)",
+    "yearlyBonus": "Bonus (EUR/vuodessa)",
+    "calculate": "Laske Netto",
+    "bonuses": "Bonukset",
+    "netSalary": "Nettopalkka",
+    "estimatedTaxRate": "Arvioitu veroprosentti",
+    "taxesPaid": "Maksetut verot",
+    "totalDeductions": "Vähennykset yhteensä",
+    "save": "Tallenna",
+    "dataSaved": "Tiedot tallennettu!",
+    "saveName": "Anna nimi",
+    "namePlaceholder": "esim. Yritys Oy",
+    "ageRange": "Ikäryhmä",
+    "municipality": "Kunta",
+    "customRate": "Muu veroprosentti",
+    "municipalRate": "Kunnallisveroprosentti",
+    "churchMember": "Kirkon jäsen",
+    "showBreakdown": "Näytä erittely",
+    "hideBreakdown": "Piilota erittely",
+    "breakdown": {
+      "stateTax": "Valtion tulovero",
+      "municipalTax": "Kunnallisvero",
+      "churchTax": "Kirkollisvero",
+      "pension": "Eläkemaksu (TyEL)",
+      "unemployment": "Työttömyysvakuutusmaksu",
+      "healthInsurance": "Sairausvakuutus",
+      "workIncomeCredit": "Työtulovähennys"
+    }
+  },
+  "saved": {
+    "title": "Tallennetut",
+    "noItems": "Ei tallennettuja laskelmia",
+    "delete": "Poista",
+    "confirmDelete": "Haluatko varmasti poistaa tämän?"
+  },
+  "about": {
+    "title": "Tietoja",
+    "description": "Tämä sovellus laskee arvion nettopalkasta bruttopalkasta käyttäen suomalaisia veroprosentteja vuodelle 2025.",
+    "disclaimer": "Huom: Laskelmat ovat arvioita. Todellinen veroprosentti voi vaihdella henkilökohtaisten vähennysten ja olosuhteiden mukaan.",
+    "version": "Versio",
+    "taxYear": "Verovuosi"
+  },
+  "common": {
+    "cancel": "Peruuta",
+    "perMonth": "EUR/kk",
+    "perYear": "EUR/vuosi"
+  },
+  "validation": {
+    "invalidNumber": "Tarkista summa. Käytä vain numeroita.",
+    "tooLarge": "Tarkista summa. Syötteen täytyy olla numero, joka on alle yhden miljardin."
+  }
+}

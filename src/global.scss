@@ -1,100 +1,467 @@
-// http://ionicframework.com/docs/theming/
-@import '~@ionic/angular/css/core.css';
-@import '~@ionic/angular/css/normalize.css';
-@import '~@ionic/angular/css/structure.css';
-@import '~@ionic/angular/css/typography.css';
+/*
+ * Nettopalkkalaskuri - Cool Modern Dark Theme
+ * Sleek glassmorphism design with vibrant gradients
+ */
 
-@import '~@ionic/angular/css/padding.css';
-@import '~@ionic/angular/css/float-elements.css';
-@import '~@ionic/angular/css/text-alignment.css';
-@import '~@ionic/angular/css/text-transformation.css';
-@import '~@ionic/angular/css/flex-utils.css';
+/* Import Google Fonts - Inter for clean modern look */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
-@font-face {
-    font-family: 'lemonMilk';
-    font-style: normal;
-    font-weight: normal;
-    src: url('./assets/fonts/LemonMilk.otf');
+/* Core CSS required for Ionic components to work properly */
+@import "@ionic/angular/css/core.css";
+
+/* Basic CSS for apps built with Ionic */
+@import "@ionic/angular/css/normalize.css";
+@import "@ionic/angular/css/structure.css";
+@import "@ionic/angular/css/typography.css";
+@import "@ionic/angular/css/display.css";
+
+/* Optional CSS utils */
+@import "@ionic/angular/css/padding.css";
+@import "@ionic/angular/css/float-elements.css";
+@import "@ionic/angular/css/text-alignment.css";
+@import "@ionic/angular/css/text-transformation.css";
+@import "@ionic/angular/css/flex-utils.css";
+
+/* ==========================================================================
+   Base Styles
+   ========================================================================== */
+
+* {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
+ion-content {
+  --padding-start: 16px;
+  --padding-end: 16px;
+  --padding-top: 20px;
+  --padding-bottom: 20px;
+  --background: var(--gradient-bg);
+}
 
-#mainWrapper {
+/* Animated gradient background */
+ion-content::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background:
+    radial-gradient(ellipse at 20% 20%, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 80%, rgba(236, 72, 153, 0.1) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(6, 182, 212, 0.08) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: -1;
 }
-#mainWrapper2 {
-    padding: 0 5px;
-    background-image: linear-gradient(to top, #d5d4d0 0%, #d5d4d0 1%, #eeeeec 31%, #efeeec 75%, #e9e9e7 100%);
+
+/* ==========================================================================
+   Header & Toolbar
+   ========================================================================== */
+
+ion-toolbar {
+  --border-width: 0;
+  --padding-start: 12px;
+  --padding-end: 12px;
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
 }
-#subWrapper {
-    background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
+
+/* Center titles even with left language button */
+ion-toolbar.app-toolbar {
+  position: relative;
 }
-#highlightText {
-    padding: 5px 0;
-    color: white;
-    font-size: 16px;
+
+ion-toolbar.app-toolbar ion-buttons {
+  position: relative;
+  z-index: 2;
 }
-#highlightText2 {
-    text-transform: uppercase;
-    padding: 5px 0;
-    color: white;
-    font-size: 18px;
+
+ion-toolbar.app-toolbar ion-title {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  text-align: center;
+  padding-inline: 56px;
+  pointer-events: none;
+  z-index: 1;
 }
-.toolbarColor {
-    --background: linear-gradient(#3f3f3f, #000000);
-    font-family: lemonMilk;
+
+ion-title {
+  font-weight: 700;
+  font-size: 1.3rem;
+  letter-spacing: -0.02em;
 }
-  
-.titleText {
-    font-size: 6vw;
-    --color: white;
+
+/* Language Toggle Button */
+ion-toolbar ion-button[size="small"] {
+  --border-radius: 10px;
+  --background: var(--glass-bg);
+  --background-hover: rgba(99, 102, 241, 0.3);
+  border: 1px solid var(--glass-border);
+  font-weight: 600;
+  font-size: 0.75rem;
+  backdrop-filter: var(--glass-blur);
 }
-.footerColor {
-    --background: linear-gradient(#3f3f3f, #000000);
+
+/* ==========================================================================
+   Cards - Glassmorphism Style
+   ========================================================================== */
+
+ion-card {
+  border-radius: var(--app-border-radius);
+  background: var(--gradient-card);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--app-shadow);
+  margin: 0 0 20px 0;
+  overflow: hidden;
 }
-.iconColor {
-    --color: rgb(197, 196, 196);
-    --color-selected:#3880ff;
+
+ion-card-header {
+  padding: 24px 24px 16px;
 }
-.appBackground {
-    --background: linear-gradient(#3f3f3f, #000000);
+
+ion-card-content {
+  padding: 16px 24px 24px;
 }
-.mainCard {
-    padding: 0px 5px;
-    min-height: 450px;
-    margin: 10px 20px;
-    max-width: 500px;
-    background: linear-gradient(#929292,#6b6a6a);
-}
-.mainCard2 {
-    margin: auto;
-    padding: 0px 5px;
-    margin-bottom: 5px;
-    margin-top: 10px;
-    max-width: 300px;
-    background: linear-gradient(#929292,#838282);
-}
-.appFrame {
-    margin: auto;
-}
+
 ion-card-title {
-    transform: translate(0px, 5px);
-    font-family: lemonMilk;
-    font-size: 20px;
-    color: white;
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -0.03em;
 }
+
 ion-card-subtitle {
-    color: rgb(216, 214, 214);
-}
-.centerObject {
-    margin: auto;
-    text-align: center;
-    padding-top: 3px;
+  font-size: 0.9rem;
+  color: rgba(241, 245, 249, 0.7);
+  margin-top: 6px;
+  font-weight: 500;
 }
 
-/* Small devices (portrait tablets and large phones, 600px and up) */
-@media only screen and (min-width: 576px) {
-    .mainCard {
-        margin: auto;
+/* Main Calculator Card */
+.mainCard {
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
 
-    }
-    
+.mainCard2 {
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ==========================================================================
+   Input Fields
+   ========================================================================== */
+
+ion-item {
+  --border-radius: var(--app-border-radius-sm);
+  --background: rgba(51, 65, 85, 0.4);
+  --padding-start: 18px;
+  --padding-end: 18px;
+  --inner-padding-end: 0;
+  margin-bottom: 14px;
+  border-radius: var(--app-border-radius-sm);
+  border: 1px solid var(--glass-border);
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+ion-item:focus-within {
+  --background: rgba(99, 102, 241, 0.15);
+  border-color: rgba(99, 102, 241, 0.5);
+  box-shadow: var(--glow-primary);
+}
+
+ion-label {
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: rgba(241, 245, 249, 0.8) !important;
+  margin-bottom: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+ion-input {
+  --padding-start: 0;
+  --padding-top: 10px;
+  --padding-bottom: 10px;
+  --color: #ffffff;
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+ion-input::placeholder {
+  color: rgba(241, 245, 249, 0.3);
+}
+
+/* ==========================================================================
+   Buttons
+   ========================================================================== */
+
+ion-button {
+  --border-radius: var(--app-border-radius-sm);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: none;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+ion-button[shape="round"] {
+  --border-radius: 999px;
+  --padding-start: 28px;
+  --padding-end: 28px;
+}
+
+/* Primary button with gradient */
+ion-button:not([fill="outline"]):not([color]) {
+  --background: var(--gradient-primary);
+  --background-hover: var(--gradient-primary);
+  --box-shadow: var(--glow-primary);
+}
+
+ion-button:not([fill="outline"]):not([color]):hover {
+  transform: translateY(-2px);
+  --box-shadow: 0 0 30px rgba(99, 102, 241, 0.6);
+}
+
+/* Success button */
+ion-button[color="success"] {
+  --background: var(--gradient-success);
+  --background-hover: var(--gradient-success);
+  --box-shadow: var(--glow-success);
+}
+
+ion-button[color="success"]:hover {
+  transform: translateY(-2px);
+  --box-shadow: 0 0 30px rgba(16, 185, 129, 0.6);
+}
+
+/* Outline button */
+ion-button[fill="outline"] {
+  --color: rgba(241, 245, 249, 0.85);
+  --border-color: rgba(241, 245, 249, 0.22);
+  --background: rgba(99, 102, 241, 0.08);
+  --background-hover: rgba(99, 102, 241, 0.2);
+}
+
+/* ==========================================================================
+   Result Display
+   ========================================================================== */
+
+#highlightText2 {
+  background: var(--gradient-success);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-size: inherit;
+  font-weight: inherit;
+  padding: 12px 0;
+  text-transform: none;
+  letter-spacing: -0.02em;
+}
+
+/* Result card glow effect */
+ion-card:has(#highlightText2) {
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  box-shadow: var(--glow-success), var(--app-shadow);
+}
+
+/* ==========================================================================
+   Tab Bar
+   ========================================================================== */
+
+ion-tab-bar {
+  --border: none;
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border-top: 1px solid var(--glass-border);
+  padding: 8px 0;
+  height: 65px;
+}
+
+ion-tab-button {
+  --color: rgba(241, 245, 249, 0.5);
+  --color-selected: var(--ion-color-primary);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  transition: all 0.3s ease;
+}
+
+ion-tab-button.tab-selected {
+  --color-selected: #ffffff;
+}
+
+ion-tab-button.tab-selected ion-icon {
+  filter: drop-shadow(0 0 8px rgba(99, 102, 241, 0.8));
+}
+
+ion-tab-button ion-icon {
+  font-size: 1.6rem;
+  transition: all 0.3s ease;
+}
+
+ion-tab-button ion-label {
+  font-weight: 600;
+  margin-top: 4px;
+}
+
+/* ==========================================================================
+   Empty State
+   ========================================================================== */
+
+ion-card-content ion-icon[name="bookmark-outline"] {
+  filter: drop-shadow(0 0 10px rgba(99, 102, 241, 0.3));
+}
+
+/* ==========================================================================
+   Animations
+   ========================================================================== */
+
+ion-card {
+  animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Celebration pop animation for result cards */
+@keyframes celebratePop {
+  0% {
+    opacity: 0;
+    transform: scale(0.8) translateY(20px);
+  }
+  50% {
+    transform: scale(1.02) translateY(-5px);
+  }
+  70% {
+    transform: scale(0.98) translateY(2px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Result card with celebration animation and pulsing glow */
+ion-card:has(#highlightText2) {
+  animation: celebratePop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), resultGlow 2s ease-in-out infinite alternate;
+  animation-delay: 0s, 0.6s;
+}
+
+@keyframes resultGlow {
+  from {
+    box-shadow: 0 0 20px rgba(16, 185, 129, 0.4), 0 0 40px rgba(6, 182, 212, 0.2), var(--app-shadow);
+  }
+  to {
+    box-shadow: 0 0 35px rgba(16, 185, 129, 0.6), 0 0 60px rgba(6, 182, 212, 0.3), var(--app-shadow);
+  }
+}
+
+/* Shimmer effect on result text */
+#highlightText2 {
+  animation: shimmer 2s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0%, 100% {
+    filter: brightness(1);
+  }
+  50% {
+    filter: brightness(1.2);
+  }
+}
+
+/* Badge pulse animation */
+ion-badge {
+  animation: badgePulse 2s ease-in-out infinite;
+}
+
+@keyframes badgePulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+/* ==========================================================================
+   Hover Effects
+   ========================================================================== */
+
+ion-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+ion-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--app-shadow-lg);
+}
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
+
+@media (min-width: 576px) {
+  ion-content {
+    --padding-start: 24px;
+    --padding-end: 24px;
+  }
+
+  ion-card-title {
+    font-size: 1.6rem;
+  }
+}
+
+@media (min-width: 768px) {
+  ion-content {
+    --padding-start: 32px;
+    --padding-end: 32px;
+    --padding-top: 32px;
+  }
+}
+
+/* ==========================================================================
+   Accessibility - Focus States
+   ========================================================================== */
+
+ion-button:focus-visible {
+  outline: 2px solid var(--ion-color-primary);
+  outline-offset: 3px;
+}
+
+/* ==========================================================================
+   Scrollbar Styling
+   ========================================================================== */
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(15, 23, 42, 0.5);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(99, 102, 241, 0.5);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(99, 102, 241, 0.7);
 }

@@ -1,82 +1,33 @@
 <ion-header>
-    <ion-toolbar class="toolbarColor">
-      <ion-buttons *ngIf="languageSelector.language == 'fi'" padding slot="start">
-        <ion-button size="small" color="dark" shape="round" (click)="languageSelector.changeToEnglish()">{{ languageSelector.languageOptionToShow }}</ion-button>
-      </ion-buttons>
-      <ion-buttons *ngIf="languageSelector.language == 'en'" padding slot="start">
-        <ion-button size="small" color="dark" shape="round" (click)="languageSelector.changeToFinnish()">{{ languageSelector.languageOptionToShow }}</ion-button>
-      </ion-buttons>
-      <ion-title *ngIf="languageSelector.language == 'fi'" text-center class="titleText">
-        Info
-      </ion-title>
-      <ion-title *ngIf="languageSelector.language == 'en'" text-center class="titleText">
-        Info
-      </ion-title>
-      <ion-buttons *ngIf="languageSelector.language == 'fi'" padding slot="end">
-        <ion-button size="small" color="medium" shape="round" (click)="languageSelector.changeToEnglish()">{{ languageSelector.languageOptionToShow }}</ion-button>
-      </ion-buttons>
-      <ion-buttons *ngIf="languageSelector.language == 'en'" padding slot="end">
-        <ion-button size="small" color="medium" shape="round" (click)="languageSelector.changeToFinnish()">{{ languageSelector.languageOptionToShow }}</ion-button>
-      </ion-buttons>
-    </ion-toolbar>
-  </ion-header>
+  <ion-toolbar class="app-toolbar">
+    <ion-buttons slot="start">
+      <ion-button size="small" color="medium" (click)="language.toggle()">
+        {{ language.getOtherLanguage().toUpperCase() }}
+      </ion-button>
+    </ion-buttons>
+    <ion-title>{{ 'about.title' | translate }}</ion-title>
+  </ion-toolbar>
+</ion-header>
 
-<ion-content class="appBackground">
-
-  <ion-card padding class="mainCard">
-    <ion-card-header color="info" padding>
-      <ion-card-title *ngIf="languageSelector.language == 'fi'" padding class="cardHeader">
-        Sovelluksen laskentalogiikasta:  
-      </ion-card-title>
-      <ion-card-title *ngIf="languageSelector.language == 'en'" padding class="cardHeader">
-        About the calculation logic:  
-      </ion-card-title>
-
-      <ion-card-subtitle *ngIf="languageSelector.language == 'fi'" class="ion-padding-horizontal">
-        Laskentaprosessi perustuu veronmaksajain keskusliiton julkaisemaan dataan.
-      </ion-card-subtitle>
-      <ion-card-subtitle *ngIf="languageSelector.language == 'en'" class="ion-padding-horizontal">
-        The calculation process is based on data provided by the central union of taxpayers.
-      </ion-card-subtitle>
-
-      <ion-card-subtitle *ngIf="languageSelector.language == 'fi'" class="ion-padding-horizontal">
-        "Laskelmien veroprosentit sisältävät 
-        Verohallinnon keräämät tuloverot (valtion tulovero, 
-        kunnallisvero, kirkollisvero, yleisradiovero, sairausvakuutuksen sairaanhoito- 
-        ja päivärahamaksut) sekä pakolliset palkasta pidätettävät veronluonteiset 
-        työeläke- (ei sisällä 53-62-vuotiaiden korotusosuutta) ja 
-        työttömyysvakuutusmaksut. 
-      </ion-card-subtitle>
-      <ion-card-subtitle *ngIf="languageSelector.language == 'en'" class="ion-padding-horizontal">
-        "The tax percentages used in the calculation include taxes collected by the tax administration
-        (government income tax, church tax, Yle tax, healthcare- and per diem payment of the health insurance)
-        and mandatory tax-like withholdings of employment pension (does not include the increased share of
-        people aged 53-62) and unemployment insurance payment.
-      </ion-card-subtitle>
-
-      <ion-card-subtitle *ngIf="languageSelector.language == 'fi'" class="ion-padding-horizontal">
-        Laskelmissa on käytetty keskimääräisiä kunnallis- ja kirkollisveroprosentteja 
-        ja huomiotu automaattisesti verottajan viran puolesta tekemät palkkatuloihin 
-        kohdistuvat vähennykset, joita ovat kunnallisverotuksen perusvähennys ja 
-        ansiotulovähennys, tulonhankkimisvähennys sekä työtulovähennys. Vuositulo 
-        verotusta varten on laskelmissa 12,5 x kk-palkka (lomarahat huomioiden)."
-      </ion-card-subtitle>
-      <ion-card-subtitle *ngIf="languageSelector.language == 'en'" class="ion-padding-horizontal">
-        The calculation uses the average municipal- and church tax percentages
-        and automatic reductions to salary income made by the tax administration (the basic and income 
-        reduction of municipal taxation and income acquisition reduction) are taken into account. Yearly income
-        for taxation is 12,5 times the salary a month (bonus holiday pay taken into account)."
-      </ion-card-subtitle>
-
-      <ion-card-subtitle *ngIf="languageSelector.language == 'fi'" class="ion-padding-horizontal">
-        Lähde: <a href="https://www.veronmaksajat.fi/luvut/Laskelmat/Palkansaajan-veroprosentit/">Veronmaksajain keskusliitto, Palkansaajien veroprosentit 2020.</a> 
-      </ion-card-subtitle>
-      <ion-card-subtitle *ngIf="languageSelector.language == 'en'" class="ion-padding-horizontal">
-        Source: <a href="https://www.veronmaksajat.fi/luvut/Laskelmat/Palkansaajan-veroprosentit/">Veronmaksajain keskusliitto, Palkansaajien veroprosentit 2020.</a> 
-      </ion-card-subtitle>
+<ion-content>
+  <ion-card class="mainCard2">
+    <ion-card-header>
+      <ion-card-title class="ion-text-center">{{ 'app.title' | translate }}</ion-card-title>
     </ion-card-header>
+    <ion-card-content>
+      <div class="ion-text-center ion-margin-bottom">
+        <ion-chip color="primary">
+          <ion-icon name="calendar-outline"></ion-icon>
+          <ion-label>{{ 'about.taxYear' | translate }}: 2025</ion-label>
+        </ion-chip>
+      </div>
+      <p class="ion-margin-bottom">{{ 'about.description' | translate }}</p>
+      <p class="ion-margin-bottom" style="color: var(--ion-color-medium); font-size: 0.875rem;">
+        {{ 'about.disclaimer' | translate }}
+      </p>
+      <p style="color: var(--ion-color-medium); font-size: 0.875rem;">
+        {{ 'about.version' | translate }}: {{ appVersion }}
+      </p>
+    </ion-card-content>
   </ion-card>
-  
 </ion-content>
-
-
