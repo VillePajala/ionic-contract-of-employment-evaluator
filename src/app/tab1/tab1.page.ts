@@ -23,9 +23,12 @@ import {
   IonList,
   IonSegment,
   IonSegmentButton,
+  IonIcon,
   AlertController,
 } from '@ionic/angular/standalone';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { addIcons } from 'ionicons';
+import { downloadOutline } from 'ionicons/icons';
 import { TaxCalculatorService } from '../core/services/tax-calculator.service';
 import { DatabaseService } from '../core/services/database.service';
 import { LanguageService } from '../core/services/language.service';
@@ -66,6 +69,7 @@ import {
     IonList,
     IonSegment,
     IonSegmentButton,
+    IonIcon,
   ],
 })
 export class Tab1Page {
@@ -76,6 +80,10 @@ export class Tab1Page {
 
   readonly language = inject(LanguageService);
   readonly pwaInstall = inject(PwaInstallService);
+
+  constructor() {
+    addIcons({ downloadOutline });
+  }
 
   // Municipality list for dropdown
   readonly municipalities = MUNICIPALITIES_2025;

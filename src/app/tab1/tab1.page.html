@@ -15,12 +15,13 @@
     <ion-card class="install-card">
       <ion-card-content>
         <div class="install-content">
+          <ion-icon name="download-outline" class="install-icon"></ion-icon>
           <div class="install-text">
             <h3>{{ 'pwa.installTitle' | translate }}</h3>
             <p>{{ 'pwa.installMessage' | translate }}</p>
           </div>
           <div class="install-actions">
-            <ion-button size="small" (click)="pwaInstall.install()">
+            <ion-button size="small" shape="round" (click)="pwaInstall.install()">
               {{ 'pwa.install' | translate }}
             </ion-button>
             <ion-button size="small" fill="clear" (click)="pwaInstall.dismiss()">

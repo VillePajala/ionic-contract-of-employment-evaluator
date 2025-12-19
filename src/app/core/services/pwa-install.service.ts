@@ -3,26 +3,38 @@ import { Injectable, signal } from '@angular/core';
 /**
  * Service for handling PWA installation prompt.
  *
- * Captures the `beforeinstallprompt` event and provides methods
- * to check installability and trigger the install prompt.
+ * Shows install prompt when app is not installed (not in standalone mode).
  */
 @Injectable({ providedIn: 'root' })
 export class PwaInstallService {
-  private readonly DISMISSED_KEY = 'pwaInstallDismissed';
   private deferredPrompt: BeforeInstallPromptEvent | null = null;
 
   /**
    * Signal indicating whether the app can be installed.
+   * True when: not in standalone mode AND beforeinstallprompt was received.
    */
   readonly canInstall = signal(false);
 
   /**
-   * Signal indicating whether the user has dismissed the prompt.
+   * Signal indicating if running as installed PWA.
    */
-  readonly isDismissed = signal(this.wasDismissed());
+  readonly isInstalled = signal(this.checkIsInstalled());
 
   constructor() {
-    this.initInstallPrompt();
+    if (!this.isInstalled()) {
+      this.initInstallPrompt();
+    }
+  }
+
+  /**
+   * Checks if the app is running in standalone mode (installed).
+   */
+  private checkIsInstalled(): boolean {
+    // Check for standalone display mode
+    const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
+    // Check for iOS standalone mode
+    const isIOSStandalone = (navigator as NavigatorWithStandalone).standalone === true;
+    return isStandalone || isIOSStandalone;
   }
 
   /**
@@ -34,16 +46,23 @@ export class PwaInstallService {
       event.preventDefault();
       // Store the event for later use
       this.deferredPrompt = event as BeforeInstallPromptEvent;
-      // Update the signal to show install button
-      if (!this.wasDismissed()) {
-        this.canInstall.set(true);
-      }
+      // Show install button since we're not installed
+      this.canInstall.set(true);
     });
 
     // Listen for successful installation
     window.addEventListener('appinstalled', () => {
       this.canInstall.set(false);
+      this.isInstalled.set(true);
       this.deferredPrompt = null;
+    });
+
+    // Listen for display mode changes
+    window.matchMedia('(display-mode: standalone)').addEventListener('change', (e) => {
+      if (e.matches) {
+        this.isInstalled.set(true);
+        this.canInstall.set(false);
+      }
     });
   }
 
@@ -61,27 +80,19 @@ export class PwaInstallService {
     // Wait for the user's response
     const { outcome } = await this.deferredPrompt.userChoice;
 
-    // Clear the deferred prompt
-    this.deferredPrompt = null;
-    this.canInstall.set(false);
+    if (outcome === 'accepted') {
+      this.deferredPrompt = null;
+      this.canInstall.set(false);
+    }
 
     return outcome === 'accepted';
   }
 
   /**
-   * Dismisses the install prompt (user clicked "later").
+   * Hides the install prompt temporarily (for current session only).
    */
   dismiss(): void {
-    localStorage.setItem(this.DISMISSED_KEY, 'true');
-    this.isDismissed.set(true);
     this.canInstall.set(false);
-  }
-
-  /**
-   * Checks if the prompt was previously dismissed.
-   */
-  private wasDismissed(): boolean {
-    return localStorage.getItem(this.DISMISSED_KEY) === 'true';
   }
 }
 
@@ -92,4 +103,11 @@ interface BeforeInstallPromptEvent extends Event {
   readonly platforms: string[];
   readonly userChoice: Promise<{ outcome: 'accepted' | 'dismissed' }>;
   prompt(): Promise<void>;
+}
+
+/**
+ * Navigator with iOS standalone property.
+ */
+interface NavigatorWithStandalone extends Navigator {
+  standalone?: boolean;
 }

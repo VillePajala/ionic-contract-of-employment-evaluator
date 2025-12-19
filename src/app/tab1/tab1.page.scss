@@ -2,44 +2,72 @@
 
 /* PWA Install Prompt */
 .install-card {
-  border: 1px solid rgba(99, 102, 241, 0.4);
-  background: linear-gradient(135deg, rgba(99, 102, 241, 0.15) 0%, rgba(6, 182, 212, 0.1) 100%);
+  background: var(--gradient-card);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glow-primary), var(--app-shadow);
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
 
   ion-card-content {
-    padding: 16px 20px;
+    padding: 20px 24px;
   }
 }
 
 .install-content {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   gap: 16px;
-  flex-wrap: wrap;
+
+  @media (max-width: 400px) {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+.install-icon {
+  font-size: 2.5rem;
+  color: var(--ion-color-primary);
+  filter: drop-shadow(0 0 8px rgba(99, 102, 241, 0.6));
+  flex-shrink: 0;
 }
 
 .install-text {
   flex: 1;
-  min-width: 200px;
 
   h3 {
-    margin: 0 0 4px 0;
-    font-size: 1rem;
+    margin: 0 0 6px 0;
+    font-size: 1.1rem;
     font-weight: 700;
     color: #fff;
+    letter-spacing: -0.02em;
   }
 
   p {
     margin: 0;
-    font-size: 0.85rem;
+    font-size: 0.9rem;
     color: rgba(241, 245, 249, 0.7);
+    line-height: 1.4;
   }
 }
 
 .install-actions {
   display: flex;
+  flex-direction: column;
   gap: 8px;
   flex-shrink: 0;
+
+  ion-button {
+    margin: 0;
+  }
+
+  @media (max-width: 400px) {
+    flex-direction: row;
+    width: 100%;
+    justify-content: center;
+  }
 }
 
 .options-section {
