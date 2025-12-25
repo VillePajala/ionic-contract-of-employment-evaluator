@@ -1,31 +1,61 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
   <defs>
-    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#1e293b"/>
-      <stop offset="100%" style="stop-color:#0f172a"/>
+    <!-- Background gradient - deep professional blue -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a365d"/>
+      <stop offset="100%" style="stop-color:#0d1b2a"/>
     </linearGradient>
-    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#6366f1"/>
-      <stop offset="50%" style="stop-color:#8b5cf6"/>
-      <stop offset="100%" style="stop-color:#ec4899"/>
+    <!-- Document gradient -->
+    <linearGradient id="docGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f8fafc"/>
+      <stop offset="100%" style="stop-color:#e2e8f0"/>
     </linearGradient>
-    <linearGradient id="success" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#10b981"/>
+    <!-- Accent gradient - teal/cyan for trust -->
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0ea5e9"/>
       <stop offset="100%" style="stop-color:#06b6d4"/>
     </linearGradient>
+    <!-- Checkmark gradient - green for approval -->
+    <linearGradient id="checkGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#22c55e"/>
+      <stop offset="100%" style="stop-color:#10b981"/>
+    </linearGradient>
+    <!-- Shadow -->
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="#000" flood-opacity="0.3"/>
+    </filter>
   </defs>
 
-  <!-- Background circle -->
-  <circle cx="256" cy="256" r="240" fill="url(#bg)" stroke="url(#accent)" stroke-width="16"/>
+  <!-- Background rounded square -->
+  <rect x="16" y="16" width="480" height="480" rx="96" fill="url(#bgGrad)"/>
 
-  <!-- Euro symbol -->
-  <text x="256" y="320" font-family="Arial, sans-serif" font-size="280" font-weight="bold" text-anchor="middle" fill="url(#success)">€</text>
-
-  <!-- Small calculator grid hint -->
-  <g fill="url(#accent)" opacity="0.6">
-    <rect x="340" y="120" width="40" height="40" rx="8"/>
-    <rect x="390" y="120" width="40" height="40" rx="8"/>
-    <rect x="340" y="170" width="40" height="40" rx="8"/>
-    <rect x="390" y="170" width="40" height="40" rx="8"/>
+  <!-- Document/Contract shape -->
+  <g filter="url(#shadow)">
+    <!-- Main document body -->
+    <path d="M140 96 L320 96 L372 148 L372 416 L140 416 Z" fill="url(#docGrad)"/>
+    <!-- Folded corner -->
+    <path d="M320 96 L320 148 L372 148 Z" fill="#cbd5e1"/>
   </g>
+
+  <!-- Contract text lines -->
+  <g fill="url(#accentGrad)">
+    <rect x="172" y="180" width="168" height="16" rx="4"/>
+    <rect x="172" y="212" width="140" height="16" rx="4"/>
+    <rect x="172" y="244" width="156" height="16" rx="4"/>
+    <rect x="172" y="276" width="120" height="16" rx="4"/>
+  </g>
+
+  <!-- Signature line area -->
+  <rect x="172" y="340" width="168" height="2" fill="#94a3b8"/>
+  <text x="180" y="370" font-family="Arial, sans-serif" font-size="18" fill="#64748b">Signature</text>
+
+  <!-- Checkmark badge circle -->
+  <circle cx="372" cy="372" r="80" fill="url(#checkGrad)" filter="url(#shadow)"/>
+
+  <!-- White checkmark -->
+  <path d="M332 372 L358 398 L412 344" stroke="#fff" stroke-width="16" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+
+  <!-- Small person icon on document (employment symbol) -->
+  <circle cx="196" cy="136" r="16" fill="url(#accentGrad)"/>
+  <path d="M180 168 Q196 180 212 168" stroke="url(#accentGrad)" stroke-width="8" stroke-linecap="round" fill="none"/>
 </svg>
